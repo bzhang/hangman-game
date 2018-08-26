@@ -1,6 +1,11 @@
-.keyboard {
-    align: center;
+.main {
+    font-size: 30px;
 }
+
+.keyboard {
+    text-align: center;
+}
+
 .keyboard .letter {
     width: 52px;
     height: 52px;
@@ -29,7 +34,7 @@
     border-color: #db3434;
 }
 
-.main .current-word {
+.game .current-word {
     line-height: 80px;
     text-align: center;
 }
