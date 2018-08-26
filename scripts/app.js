@@ -44,7 +44,8 @@ for (let i = 0; i < elements.length; i++) {
                 gameResult = true;
                 console.log("You win!");
             }
-            console.log(display);
+            console.log(display); 
+            document.getElementsByClassName("current-word")[0].textContent = display;
         }        
     });
     
