@@ -10,7 +10,7 @@
 
 .keyboard {
     text-align: center;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .keyboard .letter {
@@ -25,9 +25,14 @@
     border-style: solid;
     cursor: pointer;
     line-height: 48px;
-    font-weight: bold;
+    /* font-weight: bold; */
     background-color: #3498db;
     border-color: #3498db;
+}
+
+.keyboard .letter:hover {
+    background-color: #3468ab;
+    border-color: #3468ab;
 }
 
 .keyboard .letter.correct {
