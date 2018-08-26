@@ -1,5 +1,11 @@
-.main {
-    font-size: 30px;
+.row {
+    font-size: 30px;    
+}
+
+.game .current-word {
+    line-height: 80px;
+    text-align: center;
+    letter-spacing: 10px;
 }
 
 .keyboard {
@@ -34,7 +40,6 @@
     border-color: #db3434;
 }
 
-.game .current-word {
-    line-height: 80px;
+.hangman {
     text-align: center;
 }
