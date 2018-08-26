@@ -32,19 +32,20 @@ for (let i = 0; i < elements.length; i++) {
             console.log(undiscoveredLetters);
             discoveredLetters.push(typedLetter);
             element.classList.add("correct");
+            let display = word;
             for (let i = 0; i < undiscoveredLetters.length; i++) {
                 let letter = undiscoveredLetters[i];
                 // console.log(letter);
-                word = word.replace(/letter/g, "_"); // use regex to replace all occurance of letter
-                console.log(word);
+                display = display.replace(new RegExp(letter, 'g'), "_"); // use regex to replace all occurance of letter                
             }
             
             console.log(discoveredLetters);
-            if (undiscoveredLetters.length === 0) {
+            if (undiscoveredLetters.length === 0) {                
                 gameResult = true;
                 console.log("You win!");
             }
-        }
+            console.log(display);
+        }        
     });
     
 
