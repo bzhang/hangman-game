@@ -1,0 +1,35 @@
+.keyboard {
+    align: center;
+}
+.keyboard .letter {
+    width: 52px;
+    height: 52px;
+    margin: 2px;
+    display: inline-block;
+    border-radius: 40px;
+    text-align: center;
+    color: white;
+    border-width: 3px;
+    border-style: solid;
+    cursor: pointer;
+    line-height: 48px;
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.keyboard .letter.correct {
+    color: #47db34;
+    background-color: #ffffff;
+    border-color: #47db34;
+}
+
+.keyboard .letter.wrong {
+    color: #db3434;
+    background-color: #ffffff;
+    border-color: #db3434;
+}
+
+.main .current-word {
+    line-height: 80px;
+    text-align: center;
+}
