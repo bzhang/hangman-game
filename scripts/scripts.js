@@ -1,15 +1,17 @@
-// TODO: fetch random word from dict API
+// fetch words from dict API
 let words = [];
 let request = new XMLHttpRequest();
 const url = "http://app.linkedin-reach.io/words";
 request.open("GET", url, true);
 request.onload = function () {
     words = request.response.split("\n");
-    // TODO: get random word from words[]
-    const word = words[0].toUpperCase();
+    // get random word from words[]
+    const rand = Math.floor((Math.random() * words.length) + 1)
+    const word = words[rand].toUpperCase();
     console.log(word);
-    // TODO: convert the word to array of unique letters
-    const undiscoveredLetters = ["C", "O", "R", "E", "T"];
+    // convert word into an array of unique letters
+    const undiscoveredLetters = unique_char(word);
+    console.log(undiscoveredLetters);
     const discoveredLetters = [];
     const wrongGuesses = [];
     // gameStatus: undefined - in game; true - win; false - game over
@@ -69,3 +71,14 @@ request.onload = function () {
     }
 }
 request.send();
+
+function unique_char(string) {
+//  var str=str1;
+    let unique=[];
+    for (let i = 0; i < string.length; i++) {
+        if (unique.indexOf(string.charAt(i)) === -1) {
+            unique.push(string[i]);
+        }
+    }
+    return unique;  
+}
