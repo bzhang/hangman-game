@@ -21,12 +21,14 @@ for (let i = 0; i < elements.length; i++) {
         if (index === -1) {
             wrongGuesses.push(typedLetter);
             element.classList.add("wrong");
-            document.getElementById("remaining-guesses").textContent -= 1;
+            // Decrease the number of remaining guesses by 1
+            document.getElementById("remaining-guesses").textContent -= 1; 
             console.log(wrongGuesses);
             if (wrongGuesses.length === 6) {
-                // TODO: wire to UI
                 gameResult = false;
                 console.log("You lose!");
+                // Display lose message
+                document.getElementById("hangman").textContent = "You lose!";
             }
         } else {
             undiscoveredLetters.splice(index, 1);
@@ -44,6 +46,8 @@ for (let i = 0; i < elements.length; i++) {
             if (undiscoveredLetters.length === 0) {                
                 gameResult = true;
                 console.log("You win!");
+                // Display win message;
+                document.getElementById("hangman").textContent = "You win!";
             }
             console.log(display); 
             document.getElementsByClassName("current-word")[0].textContent = display;
