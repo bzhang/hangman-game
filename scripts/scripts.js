@@ -6,11 +6,11 @@ request.open("GET", url, true);
 request.onload = function () {
     words = request.response.split("\n");
     // get random word from words[]
-    const rand = Math.floor((Math.random() * words.length) + 1)
+    const rand = Math.floor(Math.random() * words.length);
     const word = words[rand].toUpperCase();
     console.log(word);
     // convert word into an array of unique letters
-    const undiscoveredLetters = unique_char(word);
+    const undiscoveredLetters = uniqueChar(word);
     console.log(undiscoveredLetters);
     const discoveredLetters = [];
     const wrongGuesses = [];
@@ -59,20 +59,20 @@ request.onload = function () {
             }
         });
     }
-    
-    // generate masked word and display it
-    function displayMaskedWord(word, undiscoveredLetters) {
-        for (let i = 0; i < undiscoveredLetters.length; i++) {
-            let letter = undiscoveredLetters[i];
-            // mask all undiscovered letters
-            word = word.replace(new RegExp(letter, "g"), "_"); 
-        }
-        document.getElementById("currentWord").textContent = word;
-    }
 }
 request.send();
 
-function unique_char(string) {
+// generate masked word and display it
+function displayMaskedWord(word, undiscoveredLetters) {
+    for (let i = 0; i < undiscoveredLetters.length; i++) {
+        let letter = undiscoveredLetters[i];
+        // mask all undiscovered letters
+        word = word.replace(new RegExp(letter, "g"), "_"); 
+    }
+    document.getElementById("currentWord").textContent = word;
+}
+
+function uniqueChar(string) {
 //  var str=str1;
     let unique=[];
     for (let i = 0; i < string.length; i++) {
