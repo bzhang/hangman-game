@@ -87,6 +87,7 @@ function resetGame() {
     document.getElementById("remainingGuesses").textContent = 6 - wrongGuesses.length;
     console.log(wrongGuesses);
 }
+
 // generate masked word and display it
 function displayMaskedWord(word, undiscoveredLetters) {
     for (let i = 0; i < undiscoveredLetters.length; i++) {
