@@ -6,6 +6,7 @@ const wrongGuesses = [];
 // gameResult: undefined - in game; true - win; false - lose
 let gameResult = undefined;
 
+displayMaskedWord(word, undiscoveredLetters);
 const elements = document.getElementsByClassName("letter");
 // listen to click event for each letter in keyboard
 for (let i = 0; i < elements.length; i++) {
@@ -36,26 +37,23 @@ for (let i = 0; i < elements.length; i++) {
             console.log(undiscoveredLetters);
             discoveredLetters.push(typedLetter); // add to typedLetters
             element.classList.add("correct"); // add class name "correct" to the element
-            let display = word;
-            for (let i = 0; i < undiscoveredLetters.length; i++) {
-                let letter = undiscoveredLetters[i];
-                // use regexp to replace all occurances of letter with underscores
-                display = display.replace(new RegExp(letter, 'g'), "_"); 
-            }
-            
-            console.log(discoveredLetters);
+            displayMaskedWord(word, undiscoveredLetters);
             if (undiscoveredLetters.length === 0) { // if all letters were discovered               
                 gameResult = true;
                 console.log("You win!");
                 // display win message;
                 document.getElementById("hangman").textContent = "You win!";
             }
-            console.log(display); 
-            // display the masked word for current-word
-            document.getElementsById("currentWord").textContent = display;
         }        
     });
-    
-
 }
-// document.addEventListener
+
+function displayMaskedWord(word, undiscoveredLetters) {
+    for (let i = 0; i < undiscoveredLetters.length; i++) {
+        let letter = undiscoveredLetters[i];
+        // use regexp to replace all occurances of letter with underscores
+        word = word.replace(new RegExp(letter, 'g'), "_"); 
+    }
+    // display the masked word
+    document.getElementById("currentWord").textContent = word;
+}
