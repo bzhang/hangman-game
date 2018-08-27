@@ -1,6 +1,9 @@
 // fetch words from dict API
 let words = [];
 let word = "";
+let discoveredLetters = [];
+let wrongGuesses = [];
+let undiscoveredLetters = [];
 let request = new XMLHttpRequest();
 const url = "http://app.linkedin-reach.io/words";
 request.open("GET", url, true);
@@ -10,10 +13,8 @@ request.onload = function () {
     word = getRandomWord(words);
     console.log(word);
     // convert word into an array of unique letters
-    const undiscoveredLetters = uniqueChar(word);
-    console.log(undiscoveredLetters);
-    const discoveredLetters = [];
-    const wrongGuesses = [];
+    undiscoveredLetters = uniqueChar(word);
+    console.log(undiscoveredLetters);   
     // gameStatus: undefined - in game; true - win; false - game over
     let gameStatus = undefined;
     
@@ -67,7 +68,7 @@ document.getElementById("resetBtn").addEventListener("click", resetGame);
 // TODO: remove class names
 // TODO: update undiscoveredLetters
 function resetGame() {
-    const word = getRandomWord(words);
+    word = getRandomWord(words);
     undiscoveredLetters = uniqueChar(word);
     console.log(word);
     console.log(undiscoveredLetters);
@@ -75,7 +76,7 @@ function resetGame() {
     discoveredLetters = [];
     wrongGuesses = [];
     const correctElements = document.getElementsByClassName("correct");
-    console.log(correctElements[0]);
+    console.log(correctElements.length);
     for (let i = 0; i < correctElements.length; i++) {
         console.log(correctElements[i]);
         correctElements[i].classList.remove("correct");
@@ -84,7 +85,7 @@ function resetGame() {
     for (let i = 0; i < wrongElements.length; i++) {
         wrongElements[i].classList.remove("wrong");
     }
-    document.getElementById("remainingGuesses").textContent = 6 - wrongGuesses.length;
+    document.getElementById("hangman").innerHTML = "<div>Remaining guesses:</div><div id='remainingGuesses'>6</div>";
     console.log(wrongGuesses);
 }
 
