@@ -72,6 +72,7 @@ function displayMaskedWord(word, undiscoveredLetters) {
     document.getElementById("currentWord").textContent = word;
 }
 
+// generate an array of unique letters from word
 function uniqueChar(string) {
     let unique=[];
     for (let i = 0; i < string.length; i++) {
