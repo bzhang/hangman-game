@@ -52,7 +52,7 @@ for (let i = 0; i < elements.length; i++) {
             }
             console.log(display); 
             // display the masked word for current-word
-            document.getElementsByClassName("current-word")[0].textContent = display;
+            document.getElementsById("currentWord").textContent = display;
         }        
     });
     

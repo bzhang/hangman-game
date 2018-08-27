@@ -2,7 +2,7 @@
     font-size: 30px;    
 }
 
-.game .current-word {
+#currentWord {
     line-height: 80px;
     text-align: center;
     letter-spacing: 10px;
