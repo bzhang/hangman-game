@@ -23,7 +23,7 @@ for (let i = 0; i < elements.length; i++) {
             wrongGuesses.push(typedLetter); // add to typedLetter array
             element.classList.add("wrong"); // add class name "wrong" to the element
             // Decrease the number of remaining guesses by 1
-            document.getElementById("remaining-guesses").textContent -= 1; 
+            document.getElementById("remainingGuesses").textContent -= 1; 
             console.log(wrongGuesses);
             if (wrongGuesses.length === 6) { // if guessed incorrectly for 6 times
                 gameResult = false;
