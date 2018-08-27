@@ -73,11 +73,10 @@ function displayMaskedWord(word, undiscoveredLetters) {
 }
 
 function uniqueChar(string) {
-//  var str=str1;
     let unique=[];
     for (let i = 0; i < string.length; i++) {
-        if (unique.indexOf(string.charAt(i)) === -1) {
-            unique.push(string[i]);
+        if (unique.indexOf(string.charAt(i)) === -1) { // if the character does not exist in unique 
+            unique.push(string[i]); // add to unique
         }
     }
     return unique;  
