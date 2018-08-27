@@ -65,28 +65,22 @@ request.send();
 
 document.getElementById("resetBtn").addEventListener("click", resetGame);
 
-// TODO: remove class names
-// TODO: update undiscoveredLetters
 function resetGame() {
+    discoveredLetters = [];
+    wrongGuesses = [];
     word = getRandomWord(words);
     undiscoveredLetters = uniqueChar(word);
     console.log(word);
     console.log(undiscoveredLetters);
     displayMaskedWord(word, undiscoveredLetters);
-    discoveredLetters = [];
-    wrongGuesses = [];
-    const correctElements = document.getElementsByClassName("correct");
-    console.log(correctElements.length);
-    for (let i = 0; i < correctElements.length; i++) {
-        console.log(correctElements[i]);
-        correctElements[i].classList.remove("correct");
+
+    const letters = document.getElementsByClassName("letter");
+    for (let i = 0; i < letters.length; i++) {        
+        letters[i].classList.remove("correct");
+        letters[i].classList.remove("wrong");
     }
-    const wrongElements = document.getElementsByClassName("wrong");
-    for (let i = 0; i < wrongElements.length; i++) {
-        wrongElements[i].classList.remove("wrong");
-    }
+    
     document.getElementById("hangman").innerHTML = "<div>Remaining guesses:</div><div id='remainingGuesses'>6</div>";
-    console.log(wrongGuesses);
 }
 
 // generate masked word and display it
