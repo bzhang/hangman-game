@@ -1,4 +1,5 @@
 // TODO: fetch random word from dict API
+http://app.linkedin-reach.io/words
 // TODO: capitalize letters
 let word = "CORRECT";
 // TODO: convert the word to array of unique letters
