@@ -7,6 +7,7 @@ const wrongGuesses = [];
 let gameResult = undefined;
 
 const elements = document.getElementsByClassName("letter");
+// listen to click event for each letter in keyboard
 for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     element.addEventListener("click", function () {
@@ -18,38 +19,39 @@ for (let i = 0; i < elements.length; i++) {
             return; // return if the letter has been clicked or the game ended
         }
         const index = undiscoveredLetters.indexOf(typedLetter);
-        if (index === -1) {
-            wrongGuesses.push(typedLetter);
-            element.classList.add("wrong");
+        if (index === -1) { // if the guess was wrong
+            wrongGuesses.push(typedLetter); // add to typedLetter array
+            element.classList.add("wrong"); // add class name "wrong" to the element
             // Decrease the number of remaining guesses by 1
             document.getElementById("remaining-guesses").textContent -= 1; 
             console.log(wrongGuesses);
-            if (wrongGuesses.length === 6) {
+            if (wrongGuesses.length === 6) { // if guessed incorrectly for 6 times
                 gameResult = false;
                 console.log("You lose!");
-                // Display lose message
+                // display lose message
                 document.getElementById("hangman").textContent = "You lose!";
             }
-        } else {
-            undiscoveredLetters.splice(index, 1);
+        } else { // if the guess was correct
+            undiscoveredLetters.splice(index, 1); // remove from undiscoveredLetters
             console.log(undiscoveredLetters);
-            discoveredLetters.push(typedLetter);
-            element.classList.add("correct");
+            discoveredLetters.push(typedLetter); // add to typedLetters
+            element.classList.add("correct"); // add class name "correct" to the element
             let display = word;
             for (let i = 0; i < undiscoveredLetters.length; i++) {
                 let letter = undiscoveredLetters[i];
-                // console.log(letter);
-                display = display.replace(new RegExp(letter, 'g'), "_"); // use regex to replace all occurance of letter                
+                // use regexp to replace all occurances of letter with underscores
+                display = display.replace(new RegExp(letter, 'g'), "_"); 
             }
             
             console.log(discoveredLetters);
-            if (undiscoveredLetters.length === 0) {                
+            if (undiscoveredLetters.length === 0) { // if all letters were discovered               
                 gameResult = true;
                 console.log("You win!");
-                // Display win message;
+                // display win message;
                 document.getElementById("hangman").textContent = "You win!";
             }
             console.log(display); 
+            // display the masked word for current-word
             document.getElementsByClassName("current-word")[0].textContent = display;
         }        
     });
