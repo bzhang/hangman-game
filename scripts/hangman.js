@@ -4,6 +4,8 @@ let word = "";
 let discoveredLetters = [];
 let wrongGuesses = [];
 let undiscoveredLetters = [];
+let gameStatus = undefined;
+
 let request = new XMLHttpRequest();
 const url = "http://app.linkedin-reach.io/words";
 request.open("GET", url, true);
@@ -16,7 +18,7 @@ request.onload = function () {
     undiscoveredLetters = uniqueChar(word);
     console.log(undiscoveredLetters);   
     // gameStatus: undefined - in game; true - win; false - game over
-    let gameStatus = undefined;
+    gameStatus = undefined;
     
     displayMaskedWord(word, undiscoveredLetters);
     
@@ -66,6 +68,7 @@ request.send();
 document.getElementById("resetBtn").addEventListener("click", resetGame);
 
 function resetGame() {
+    gameStatus = undefined;
     discoveredLetters = [];
     wrongGuesses = [];
     word = getRandomWord(words);
