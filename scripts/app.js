@@ -21,6 +21,7 @@ for (let i = 0; i < elements.length; i++) {
         if (index === -1) {
             wrongGuesses.push(typedLetter);
             element.classList.add("wrong");
+            document.getElementById("remaining-guesses").textContent -= 1;
             console.log(wrongGuesses);
             if (wrongGuesses.length === 6) {
                 // TODO: wire to UI
