@@ -1,13 +1,13 @@
 // fetch words from dict API
 let words = [];
+let word = "";
 let request = new XMLHttpRequest();
 const url = "http://app.linkedin-reach.io/words";
 request.open("GET", url, true);
 request.onload = function () {
     words = request.response.split("\n");
     // get random word from words[]
-    const rand = Math.floor(Math.random() * words.length);
-    const word = words[rand].toUpperCase();
+    word = getRandomWord(words);
     console.log(word);
     // convert word into an array of unique letters
     const undiscoveredLetters = uniqueChar(word);
@@ -58,10 +58,35 @@ request.onload = function () {
                 }
             }
         });
-    }
+    }    
 }
 request.send();
 
+document.getElementById("resetBtn").addEventListener("click", resetGame);
+
+// TODO: remove class names
+// TODO: update undiscoveredLetters
+function resetGame() {
+    const word = getRandomWord(words);
+    undiscoveredLetters = uniqueChar(word);
+    console.log(word);
+    console.log(undiscoveredLetters);
+    displayMaskedWord(word, undiscoveredLetters);
+    discoveredLetters = [];
+    wrongGuesses = [];
+    const correctElements = document.getElementsByClassName("correct");
+    console.log(correctElements[0]);
+    for (let i = 0; i < correctElements.length; i++) {
+        console.log(correctElements[i]);
+        correctElements[i].classList.remove("correct");
+    }
+    const wrongElements = document.getElementsByClassName("wrong");
+    for (let i = 0; i < wrongElements.length; i++) {
+        wrongElements[i].classList.remove("wrong");
+    }
+    document.getElementById("remainingGuesses").textContent = 6 - wrongGuesses.length;
+    console.log(wrongGuesses);
+}
 // generate masked word and display it
 function displayMaskedWord(word, undiscoveredLetters) {
     for (let i = 0; i < undiscoveredLetters.length; i++) {
@@ -81,4 +106,9 @@ function uniqueChar(string) {
         }
     }
     return unique;  
+}
+
+function getRandomWord(words) {
+    const rand = Math.floor(Math.random() * words.length);
+    return words[rand].toUpperCase();
 }
