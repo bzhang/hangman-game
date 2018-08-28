@@ -7,6 +7,7 @@ let wrongGuesses = [];
 let undiscoveredLetters = [];
 let gameStatus = undefined;
 const animationElement = document.getElementById("animation");
+const currentWordElement = document.getElementById("currentWord");
 
 let request = new XMLHttpRequest();
 const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
@@ -72,6 +73,7 @@ function resetGame() {
     discoveredLetters = [];
     wrongGuesses = [];
     animationElement.classList = "animation-1";
+    currentWordElement.classList = "";
     word = getRandomWord(words);
     maskedWord = word;
     undiscoveredLetters = uniqueChar(word);
@@ -133,7 +135,7 @@ function checkIfLost() {
 // generate masked word and display it
 function displayMaskedWord(maskedWord, undiscoveredLetters) {
     if (gameStatus === false) { // display the entire word in grey color
-        document.getElementById("currentWord").classList.add("failed");
+        currentWordElement.classList.add("failed");
     } else {
         for (let i = 0; i < undiscoveredLetters.length; i++) {
             let letter = undiscoveredLetters[i];
