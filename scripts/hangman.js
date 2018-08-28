@@ -1,6 +1,7 @@
 // fetch words from dict API
 let words = [];
 let word = "";
+let maskedWord = "";
 let discoveredLetters = [];
 let wrongGuesses = [];
 let undiscoveredLetters = [];
@@ -14,6 +15,7 @@ request.onload = function () {
     words = request.response.split("\n");
     // get random word from words[]
     word = getRandomWord(words);
+    maskedWord = word;
     console.log(word);
     // convert word into an array of unique letters
     undiscoveredLetters = uniqueChar(word);
@@ -21,7 +23,7 @@ request.onload = function () {
     // gameStatus: undefined - in game; true - win; false - game over
     gameStatus = undefined;
     
-    displayMaskedWord(word, undiscoveredLetters);
+    displayMaskedWord(maskedWord, undiscoveredLetters);
     
     const elements = document.getElementsByClassName("letter");
     // listen to click event for each letter
@@ -55,7 +57,7 @@ request.onload = function () {
                 discoveredLetters.push(letter);
     
                 markLetterAsCorrect(element);                
-                displayMaskedWord(word, undiscoveredLetters);
+                displayMaskedWord(maskedWord, undiscoveredLetters);
                 checkIfWin();
             }
         });
@@ -71,10 +73,11 @@ function resetGame() {
     wrongGuesses = [];
     animationElement.classList = "animation-1";
     word = getRandomWord(words);
+    maskedWord = word;
     undiscoveredLetters = uniqueChar(word);
     console.log(word);
     console.log(undiscoveredLetters);
-    displayMaskedWord(word, undiscoveredLetters);
+    displayMaskedWord(maskedWord, undiscoveredLetters);
 
     const letters = document.getElementsByClassName("letter");
     for (let i = 0; i < letters.length; i++) {        
@@ -88,6 +91,9 @@ function resetGame() {
 // get a hint
 document.getElementById("hintBtn").addEventListener("click", getHint);
 function getHint() {
+    if (gameStatus !== undefined) {
+        return;
+    }
     if (undiscoveredLetters.length !== 0) {
         let index = Math.floor(Math.random() * undiscoveredLetters.length);
         let hint = undiscoveredLetters[index];
@@ -95,7 +101,7 @@ function getHint() {
         undiscoveredLetters.splice(index, 1);
         let element = document.getElementById(hint);
         markLetterAsCorrect(element);
-        displayMaskedWord(word, undiscoveredLetters);
+        displayMaskedWord(maskedWord, undiscoveredLetters);
         discoveredLetters.push(hint);
         checkIfWin();
     }
@@ -120,17 +126,25 @@ function checkIfLost() {
         gameStatus = false; // game over
         document.getElementById("gameMessage").textContent = "Game over!";
         animationElement.classList = "animation-7";
+        displayMaskedWord(word, undiscoveredLetters); // display the entire word in grey color
     }
 }
 
 // generate masked word and display it
-function displayMaskedWord(word, undiscoveredLetters) {
-    for (let i = 0; i < undiscoveredLetters.length; i++) {
-        let letter = undiscoveredLetters[i];
-        // mask all undiscovered letters
-        word = word.replace(new RegExp(letter, "g"), "_"); 
+function displayMaskedWord(maskedWord, undiscoveredLetters) {
+    if (gameStatus === false) { // display the entire word in grey color
+        document.getElementById("currentWord").classList.add("failed");
+    } else {
+        for (let i = 0; i < undiscoveredLetters.length; i++) {
+            let letter = undiscoveredLetters[i];
+                // mask all undiscovered letters
+                maskedWord = maskedWord.replace(new RegExp(letter, "g"), "_"); 
+            }
+
     }
-    document.getElementById("currentWord").textContent = word;
+
+    
+    document.getElementById("currentWord").textContent = maskedWord;
 }
 
 // generate an array of unique letters from word
