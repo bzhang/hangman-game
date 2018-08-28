@@ -47,7 +47,7 @@
     border-color: #db3434;
 }
 
-.hangman {
+#gameMessage {
     text-align: center;
 }
 

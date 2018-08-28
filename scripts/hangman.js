@@ -81,7 +81,7 @@ function resetGame() {
         letters[i].classList.remove("wrong");
     }
     
-    document.getElementById("hangman").innerHTML = "<div>Remaining guesses:</div><div id='remainingGuesses'>6</div>";
+    document.getElementById("gameMessage").innerHTML = "<div>Remaining guesses:</div><div id='remainingGuesses'>6</div>";
 }
 
 // get a hint
@@ -108,7 +108,7 @@ function markLetterAsCorrect(element) {
 function checkIfWin() {
     if (undiscoveredLetters.length === 0) { // if all letters were discovered               
         gameStatus = true; // you win                
-        document.getElementById("hangman").textContent = "You win!";
+        document.getElementById("gameMessage").textContent = "You win!";
     }
 }
 
@@ -116,7 +116,8 @@ function checkIfWin() {
 function checkIfLost() {
     if (wrongGuesses.length === 6) {
         gameStatus = false; // game over
-        document.getElementById("hangman").textContent = "Game over!";
+        document.getElementById("gameMessage").textContent = "Game over!";
+        animationElement.classList.add("animation-7");
     }
 }
 
