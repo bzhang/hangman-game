@@ -53,4 +53,18 @@
 
 .buttons {
     text-align: center;
+    padding-top: 15px;
+}
+
+.btn {
+    text-align: center;
+    line-height: 30px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: none;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
 }
