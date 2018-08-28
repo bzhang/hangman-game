@@ -84,7 +84,10 @@ function resetGame() {
 document.getElementById("hintBtn").addEventListener("click", getHint);
 function getHint() {
     if (undiscoveredLetters.length !== 0) {
-        let hint = undiscoveredLetters.pop();
+        let index = Math.floor(Math.random() * undiscoveredLetters.length);
+        let hint = undiscoveredLetters[index];
+        console.log(hint);
+        undiscoveredLetters.splice(index, 1);
         let element = document.getElementById(hint);
         markLetterAsCorrect(element);
         displayMaskedWord(word, undiscoveredLetters);
