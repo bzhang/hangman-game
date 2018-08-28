@@ -53,7 +53,7 @@ request.onload = function () {
                 undiscoveredLetters.splice(index, 1);
                 discoveredLetters.push(letter);
     
-                element.classList.add("correct");
+                markLetterAsCorrect(element);                
                 displayMaskedWord(word, undiscoveredLetters);
                 checkIfWin();
             }
@@ -86,10 +86,18 @@ function resetGame() {
 // get a hint
 document.getElementById("hintBtn").addEventListener("click", getHint);
 function getHint() {
-    let hint = undiscoveredLetters.pop();
-    displayMaskedWord(word, undiscoveredLetters);
-    discoveredLetters.add(hint);
-    checkIfWin();
+    if (undiscoveredLetters.length !== 0) {
+        let hint = undiscoveredLetters.pop();
+        let element = document.getElementById(hint);
+        markLetterAsCorrect(element);
+        displayMaskedWord(word, undiscoveredLetters);
+        discoveredLetters.push(hint);
+        checkIfWin();
+    }
+}
+
+function markLetterAsCorrect(element) {
+    element.classList.add("correct");
 }
 
 // win the game if discovered all letters
