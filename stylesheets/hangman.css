@@ -68,3 +68,11 @@
     font-size: 16px;
     border-radius: 15px;
 }
+
+#animation { 
+    background-image: url(../images/1.png);
+    background-repeat: no-repeat; 
+    height: 320px; 
+    width: 200px; 
+    margin: 0 auto;
+}
