@@ -8,6 +8,10 @@
     letter-spacing: 10px;
 }
 
+.failed {
+    color: grey;
+}
+
 .keyboard {
     text-align: center;
     /* font-weight: bold; */
