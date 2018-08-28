@@ -5,6 +5,7 @@ let discoveredLetters = [];
 let wrongGuesses = [];
 let undiscoveredLetters = [];
 let gameStatus = undefined;
+const animationElement = document.getElementById("animation");
 
 let request = new XMLHttpRequest();
 const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
@@ -40,6 +41,9 @@ request.onload = function () {
             if (index === -1) { // if the guess was wrong
                 wrongGuesses.push(letter); // mark the letter as a wrong guess
                 element.classList.add("wrong");
+                const n = wrongGuesses.length + 1;
+                animationElement.classList.add("animation-" + n);
+
                 // update the number of remaining guesses
                 document.getElementById("remainingGuesses").textContent = 6 - wrongGuesses.length;
                 checkIfLost();
