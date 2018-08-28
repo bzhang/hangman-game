@@ -42,7 +42,7 @@ request.onload = function () {
                 wrongGuesses.push(letter); // mark the letter as a wrong guess
                 element.classList.add("wrong");
                 const n = wrongGuesses.length + 1;
-                animationElement.classList.add("animation-" + n);
+                animationElement.classList = "animation-" + n;
 
                 // update the number of remaining guesses
                 document.getElementById("remainingGuesses").textContent = 6 - wrongGuesses.length;
@@ -110,6 +110,7 @@ function checkIfWin() {
     if (undiscoveredLetters.length === 0) { // if all letters were discovered               
         gameStatus = true; // you win                
         document.getElementById("gameMessage").textContent = "You win!";
+        animationElement.classList = "animation-8";
     }
 }
 
@@ -118,7 +119,7 @@ function checkIfLost() {
     if (wrongGuesses.length === 6) {
         gameStatus = false; // game over
         document.getElementById("gameMessage").textContent = "Game over!";
-        animationElement.classList.add("animation-7");
+        animationElement.classList = "animation-7";
     }
 }
 
