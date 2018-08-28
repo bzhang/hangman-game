@@ -141,3 +141,14 @@ function getRandomWord(words) {
     const rand = Math.floor(Math.random() * words.length);
     return words[rand].toUpperCase();
 }
+
+onload = function startAnimation() { 
+    let frameHeight = 320; 
+    let frames = 2; 
+    let frame = 0; 
+    let div = document.getElementById("animation"); 
+    setInterval(function () { 
+        let frameOffset = (++frame % frames) * -frameHeight; 
+        div.style.backgroundPosition = "0px " + frameOffset + "px"; 
+    }, 100); 
+} 
