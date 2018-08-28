@@ -69,6 +69,7 @@ function resetGame() {
     gameStatus = undefined;
     discoveredLetters = [];
     wrongGuesses = [];
+    animationElement.classList = "animation-1";
     word = getRandomWord(words);
     undiscoveredLetters = uniqueChar(word);
     console.log(word);
