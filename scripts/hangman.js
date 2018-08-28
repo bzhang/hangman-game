@@ -55,18 +55,15 @@ request.onload = function () {
     
                 element.classList.add("correct");
                 displayMaskedWord(word, undiscoveredLetters);
-                if (undiscoveredLetters.length === 0) { // if all letters were discovered               
-                    gameStatus = true; // you win                
-                    document.getElementById("hangman").textContent = "You win!";
-                }
+                checkIfWin();
             }
         });
     }    
 }
 request.send();
 
+// reset the game
 document.getElementById("resetBtn").addEventListener("click", resetGame);
-
 function resetGame() {
     gameStatus = undefined;
     discoveredLetters = [];
@@ -84,6 +81,23 @@ function resetGame() {
     }
     
     document.getElementById("hangman").innerHTML = "<div>Remaining guesses:</div><div id='remainingGuesses'>6</div>";
+}
+
+// get a hint
+document.getElementById("hintBtn").addEventListener("click", getHint);
+function getHint() {
+    let hint = undiscoveredLetters.pop();
+    displayMaskedWord(word, undiscoveredLetters);
+    discoveredLetters.add(hint);
+    checkIfWin();
+}
+
+// win the game if discovered all letters
+function checkIfWin() {
+    if (undiscoveredLetters.length === 0) { // if all letters were discovered               
+        gameStatus = true; // you win                
+        document.getElementById("hangman").textContent = "You win!";
+    }
 }
 
 // generate masked word and display it
