@@ -70,9 +70,36 @@
 }
 
 #animation { 
-    background-image: url(../images/1.png);
     background-repeat: no-repeat; 
     height: 320px; 
     width: 200px; 
     margin: 0 auto;
+}
+
+.animation-1 {
+    background-image: url(../images/1.png);
+}
+
+.animation-2 {
+    background-image: url(../images/2.png);
+}
+
+.animation-3 {
+    background-image: url(../images/3.png);
+}
+
+.animation-4 {
+    background-image: url(../images/4.png);
+}
+
+.animation-5 {
+    background-image: url(../images/5.png);
+}
+
+.animation-6 {
+    background-image: url(../images/6.png);
+}
+
+.animation-7 {
+    background-image: url(../images/7.png);
 }
