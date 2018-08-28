@@ -7,7 +7,7 @@ let undiscoveredLetters = [];
 let gameStatus = undefined;
 
 let request = new XMLHttpRequest();
-const url = "http://app.linkedin-reach.io/words";
+const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
 request.open("GET", url, true);
 request.onload = function () {
     words = request.response.split("\n");
