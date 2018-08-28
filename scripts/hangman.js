@@ -42,10 +42,7 @@ request.onload = function () {
                 element.classList.add("wrong");
                 // update the number of remaining guesses
                 document.getElementById("remainingGuesses").textContent = 6 - wrongGuesses.length;
-                if (wrongGuesses.length === 6) {
-                    gameStatus = false; // game over
-                    document.getElementById("hangman").textContent = "Game over!";
-                }
+                checkIfLost();
             }
             
             else { // if the guess was correct
@@ -105,6 +102,14 @@ function checkIfWin() {
     if (undiscoveredLetters.length === 0) { // if all letters were discovered               
         gameStatus = true; // you win                
         document.getElementById("hangman").textContent = "You win!";
+    }
+}
+
+// lost the game if guessed incorrectly for 6 times
+function checkIfLost() {
+    if (wrongGuesses.length === 6) {
+        gameStatus = false; // game over
+        document.getElementById("hangman").textContent = "Game over!";
     }
 }
 
