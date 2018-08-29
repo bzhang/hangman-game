@@ -120,6 +120,7 @@ function checkIfWin() {
         gameStatus = true; // you win                
         gameMsgElement.textContent = "You win!";
         animationElement.classList = "animation-8";
+        displayMaskedWord(word, undiscoveredLetters);
     }
 }
 
@@ -136,8 +137,12 @@ function checkIfLost() {
 // generate masked word and display it
 function displayMaskedWord(maskedWord, undiscoveredLetters) {
     if (gameStatus === false) { // display the entire word in grey color
-        currentWordElement.classList.add("failed");
-    } else {
+        currentWordElement.classList = "lost";
+    } else if (gameStatus === true) { // display the word in green color
+        currentWordElement.classList = "win";
+    }
+    
+    else {
         for (let i = 0; i < undiscoveredLetters.length; i++) {
             let letter = undiscoveredLetters[i];
                 // mask all undiscovered letters

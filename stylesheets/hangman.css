@@ -8,8 +8,12 @@
     letter-spacing: 10px;
 }
 
-.failed {
+.lost {
     color: grey;
+}
+
+.win {
+    color: #47db34;
 }
 
 .keyboard {
