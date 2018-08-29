@@ -101,6 +101,16 @@ function resetGame() {
         letters[i].classList.remove("wrong");
     }
     
+    console.log("nheart = " + nHeart);
+    if (nHeart <= 0) {
+        points = 0;
+        nGame = 0;
+        nWin = 0;
+        nHeart = 3;
+        updatePoints();
+        updateHearts(nHeart);
+    }
+
     document.getElementById("gameMessage").innerHTML = "<div>Remaining guesses:</div><div id='remainingGuesses'>6</div>";
 }
 
@@ -121,7 +131,8 @@ function getHint() {
             displayMaskedWord(maskedWord, undiscoveredLetters);
             discoveredLetters.push(hint);
             nHeart--;
-            heartElement.style.width = nHeart * 32 + "px";
+            console.log("nheart = " + nHeart);
+            updateHearts(nHeart);
             checkIfWin();
         }
     }
@@ -130,6 +141,9 @@ function getHint() {
 
 function markLetterAsCorrect(element) {
     element.classList.add("correct");
+}
+function updateHearts(nHeart) {
+    heartElement.style.width = nHeart * 32 + "px";
 }
 
 // win the game if discovered all letters
@@ -157,7 +171,8 @@ function checkIfLost() {
         updatePoints();
         if (nHeart !== 0) {
             nHeart--;
-            heartElement.style.width = nHeart * 32 + "px";
+            console.log("nheart = " + nHeart);
+            updateHearts(nHeart);
         } else {
             // TODO: pop out modal to save player name and points
             playerName = "Bingjun";
