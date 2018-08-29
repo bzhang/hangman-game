@@ -62,6 +62,7 @@
 .buttons {
     text-align: center;
     padding-top: 15px;
+    margin: 0 auto;
 }
 
 .btn {
@@ -75,6 +76,13 @@
     display: inline-block;
     font-size: 16px;
     border-radius: 15px;
+}
+
+#nWin, #points {
+    font-size: 16px;
+    text-align: right;
+    margin-left: auto;
+    margin-right: 0;
 }
 
 #animation { 
