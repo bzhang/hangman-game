@@ -102,7 +102,7 @@ function resetGame() {
     }
     
     console.log("nheart = " + nHeart);
-    if (nHeart <= 0) {
+    if (nHeart === 0) {
         points = 0;
         nGame = 0;
         nWin = 0;
@@ -119,6 +119,10 @@ document.getElementById("hintBtn").addEventListener("click", getHint);
 function getHint() {
     console.log("gameStatus = " + gameStatus);
     if (gameStatus !== undefined) {
+        return;
+    }
+    if (nHeart === 0) {
+        window.alert("All hearts lost!");
         return;
     }
     if (!window.confirm("Use hint will lose 1 heart, do you want to continue?")) {
