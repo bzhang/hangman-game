@@ -9,6 +9,7 @@ let gameStatus = undefined;
 const animationElement = document.getElementById("animation");
 const currentWordElement = document.getElementById("currentWord");
 const gameMsgElement = document.getElementById("gameMessage");
+const heartElement = document.getElementById("nHeart");
 let nHeart = 3;
 let nWin = 0;
 let nGame = 0;
@@ -115,6 +116,7 @@ function getHint() {
             displayMaskedWord(maskedWord, undiscoveredLetters);
             discoveredLetters.push(hint);
             nHeart--;
+            heartElement.style.width = nHeart * 32 + "px";
             checkIfWin();
         }
     }
@@ -150,6 +152,7 @@ function checkIfLost() {
         console.log(nWin, nGame, points);
         if (nHeart !== 0) {
             nHeart--;
+            heartElement.style.width = nHeart * 32 + "px";
             console.log(nHeart);
         } else {
             // TODO: pop out lightbox to record player name and points
