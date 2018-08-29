@@ -248,11 +248,11 @@ let leaderBoardData = [
 ];
 
 function tableCreate() {
-    let tbl = document.createElement('table');
-    tbl.style.width = '100%';
-    tbl.setAttribute('border', '1');
-    let tbdy = document.createElement('tbody');
-    const tr = document.createElement('tr');
+    let tbl = document.createElement("table");
+    tbl.style.width = "100%";
+    tbl.setAttribute("border", "0");
+    let tbdy = document.createElement("tbody");
+    const tr = document.createElement("tr");
     tr.innerHTML = "<th>Player</th><th>Score</th>";
     tbdy.appendChild(tr);
     for (let i = 0; i < 10; i++) {
