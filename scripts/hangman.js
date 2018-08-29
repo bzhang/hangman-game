@@ -64,6 +64,7 @@ request.onload = function () {
                 undiscoveredLetters.splice(index, 1);
                 discoveredLetters.push(letter);
                 points++;
+                console.log(nWin, nGame, points)
                 markLetterAsCorrect(element);                
                 displayMaskedWord(maskedWord, undiscoveredLetters);
                 checkIfWin();
@@ -100,20 +101,24 @@ function resetGame() {
 // get a hint
 document.getElementById("hintBtn").addEventListener("click", getHint);
 function getHint() {
-    if (gameStatus !== undefined) {
-        return;
+    if (confirm("Use hint will lose 1 heart, do you want to continue?")) {
+        if (gameStatus !== undefined) {
+            return;
+        }
+        if (undiscoveredLetters.length !== 0) {
+            let index = Math.floor(Math.random() * undiscoveredLetters.length);
+            let hint = undiscoveredLetters[index];
+            console.log(hint);
+            undiscoveredLetters.splice(index, 1);
+            let element = document.getElementById(hint);
+            markLetterAsCorrect(element);
+            displayMaskedWord(maskedWord, undiscoveredLetters);
+            discoveredLetters.push(hint);
+            nHeart--;
+            checkIfWin();
+        }
     }
-    if (undiscoveredLetters.length !== 0) {
-        let index = Math.floor(Math.random() * undiscoveredLetters.length);
-        let hint = undiscoveredLetters[index];
-        console.log(hint);
-        undiscoveredLetters.splice(index, 1);
-        let element = document.getElementById(hint);
-        markLetterAsCorrect(element);
-        displayMaskedWord(maskedWord, undiscoveredLetters);
-        discoveredLetters.push(hint);
-        checkIfWin();
-    }
+    return;
 }
 
 function markLetterAsCorrect(element) {
@@ -130,6 +135,7 @@ function checkIfWin() {
         nWin++;
         nGame++;
         points += 10;
+        console.log(nWin, nGame, points);
     }
 }
 
@@ -141,8 +147,10 @@ function checkIfLost() {
         animationElement.classList = "animation-7";
         displayMaskedWord(word, undiscoveredLetters); // display the entire word in grey color
         nGame++;
+        console.log(nWin, nGame, points);
         if (nHeart !== 0) {
             nHeart--;
+            console.log(nHeart);
         } else {
             // TODO: pop out lightbox to record player name and points
         }
