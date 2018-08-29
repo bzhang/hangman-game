@@ -186,9 +186,7 @@ function displayMaskedWord(maskedWord, undiscoveredLetters) {
                 maskedWord = maskedWord.replace(new RegExp(letter, "g"), "_"); 
             }
 
-    }
-
-    
+    }    
     document.getElementById("currentWord").textContent = maskedWord;
 }
 
@@ -219,23 +217,52 @@ onload = function startAnimation() {
     }, 100); 
 } 
 
-// Get the modal
+// get the modal
 let modal = document.getElementById("leaderBoardModal");
-// Get the button that opens the modal
+// get the button that opens the modal
 let btn = document.getElementById("leaderBoardBtn");
-// Get the <span> element that closes the modal
+// get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
-// When the user clicks on the button, open the modal 
+// get modal content
+let modalContent = document.getElementById("leaderBoardContent");
+// when the user clicks on the button, open the modal 
 btn.onclick = function() {
     modal.style.display = "block";
+    // modalContent.innerHTML = "Leader Board<br>Bingjun<br>100";
+    tableCreate();
 }
-// When the user clicks on <span> (x), close the modal
+// when the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
 }
-// When the user clicks anywhere outside of the modal, close it
+// when the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+// create leader board table and insert into modalContent
+let leaderBoardData = [
+    {name: "Bingjun", score: "100"},
+    {name: "Lei", score: "1"}
+];
+
+function tableCreate() {
+    let tbl = document.createElement('table');
+    tbl.style.width = '100%';
+    tbl.setAttribute('border', '1');
+    let tbdy = document.createElement('tbody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = "<th>Player</th><th>Score</th>";
+    tbdy.appendChild(tr);
+    for (let i = 0; i < 10; i++) {
+        const tr = document.createElement('tr');
+        const player = leaderBoardData[i];
+        if (player) {
+            tr.innerHTML = "<td>" + player.name + "</td><td>" + player.score + "</td>";
+            tbdy.appendChild(tr);
+        }
+    }
+    tbl.appendChild(tbdy);
+    modalContent.appendChild(tbl);
 }
