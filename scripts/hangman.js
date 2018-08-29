@@ -9,6 +9,12 @@ let gameStatus = undefined;
 const animationElement = document.getElementById("animation");
 const currentWordElement = document.getElementById("currentWord");
 const gameMsgElement = document.getElementById("gameMessage");
+let nHeart = 3;
+let nWin = 0;
+let nGame = 0;
+let leaderBoard = {};
+let playerName = "";
+let points = 0;
 
 let request = new XMLHttpRequest();
 const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
@@ -131,6 +137,11 @@ function checkIfLost() {
         gameMsgElement.textContent = "Game over!";
         animationElement.classList = "animation-7";
         displayMaskedWord(word, undiscoveredLetters); // display the entire word in grey color
+        if (nHeart !== 0) {
+            nHeart--;
+        } else {
+            // TODO: pop out lightbox to record player name and points
+        }
     }
 }
 
