@@ -8,6 +8,7 @@ let undiscoveredLetters = [];
 let gameStatus = undefined;
 const animationElement = document.getElementById("animation");
 const currentWordElement = document.getElementById("currentWord");
+const gameMsgElement = document.getElementById("gameMessage");
 
 let request = new XMLHttpRequest();
 const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
@@ -117,7 +118,7 @@ function markLetterAsCorrect(element) {
 function checkIfWin() {
     if (undiscoveredLetters.length === 0) { // if all letters were discovered               
         gameStatus = true; // you win                
-        document.getElementById("gameMessage").textContent = "You win!";
+        gameMsgElement.textContent = "You win!";
         animationElement.classList = "animation-8";
     }
 }
@@ -126,7 +127,7 @@ function checkIfWin() {
 function checkIfLost() {
     if (wrongGuesses.length === 6) {
         gameStatus = false; // game over
-        document.getElementById("gameMessage").textContent = "Game over!";
+        gameMsgElement.textContent = "Game over!";
         animationElement.classList = "animation-7";
         displayMaskedWord(word, undiscoveredLetters); // display the entire word in grey color
     }
