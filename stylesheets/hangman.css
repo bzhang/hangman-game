@@ -130,6 +130,10 @@
     background-image: url(../images/8.png);
 }
 
+#leaderBoardContent {
+    font-size: 16px;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
