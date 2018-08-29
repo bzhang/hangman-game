@@ -10,6 +10,8 @@ const animationElement = document.getElementById("animation");
 const currentWordElement = document.getElementById("currentWord");
 const gameMsgElement = document.getElementById("gameMessage");
 const heartElement = document.getElementById("nHeart");
+const nWinElement = document.getElementById("nWin");
+const pointsElement = document.getElementById("points");
 let nHeart = 3;
 let nWin = 0;
 let nGame = 0;
@@ -65,6 +67,7 @@ request.onload = function () {
                 undiscoveredLetters.splice(index, 1);
                 discoveredLetters.push(letter);
                 points++;
+                updatePoints();
                 console.log(nWin, nGame, points)
                 markLetterAsCorrect(element);                
                 displayMaskedWord(maskedWord, undiscoveredLetters);
@@ -137,6 +140,7 @@ function checkIfWin() {
         nWin++;
         nGame++;
         points += 10;
+        updatePoints();
         console.log(nWin, nGame, points);
     }
 }
@@ -149,15 +153,21 @@ function checkIfLost() {
         animationElement.classList = "animation-7";
         displayMaskedWord(word, undiscoveredLetters); // display the entire word in grey color
         nGame++;
-        console.log(nWin, nGame, points);
+        updatePoints();
         if (nHeart !== 0) {
             nHeart--;
             heartElement.style.width = nHeart * 32 + "px";
-            console.log(nHeart);
         } else {
             // TODO: pop out lightbox to record player name and points
+            
         }
     }
+}
+
+// update game points
+function updatePoints() {
+    nWinElement.innerHTML = "Winning: " + nWin + "/" + nGame + " games";
+    pointsElement.innerHTML = points + " points";
 }
 
 // generate masked word and display it
