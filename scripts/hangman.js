@@ -253,13 +253,13 @@ function tableCreate() {
     tbl.setAttribute("border", "0");
     let tbdy = document.createElement("tbody");
     const tr = document.createElement("tr");
-    tr.innerHTML = "<th>Player</th><th>Score</th>";
+    tr.innerHTML = "<th>Rank</th><th>Player</th><th>Score</th>";
     tbdy.appendChild(tr);
     for (let i = 0; i < 10; i++) {
         const tr = document.createElement('tr');
         const player = leaderBoardData[i];
         if (player) {
-            tr.innerHTML = "<td>" + player.name + "</td><td>" + player.score + "</td>";
+            tr.innerHTML = "<td>" + (i + 1) + "</td><td>" + player.name + "</td><td>" + player.score + "</td>";
             tbdy.appendChild(tr);
         }
     }
