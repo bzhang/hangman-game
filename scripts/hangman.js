@@ -117,24 +117,26 @@ function resetGame() {
 // get a hint
 document.getElementById("hintBtn").addEventListener("click", getHint);
 function getHint() {
-    if (confirm("Use hint will lose 1 heart, do you want to continue?")) {
-        if (gameStatus !== undefined) {
-            return;
-        }
-        if (undiscoveredLetters.length !== 0) {
-            let index = Math.floor(Math.random() * undiscoveredLetters.length);
-            let hint = undiscoveredLetters[index];
-            console.log(hint);
-            undiscoveredLetters.splice(index, 1);
-            let element = document.getElementById(hint);
-            markLetterAsCorrect(element);
-            displayMaskedWord(maskedWord, undiscoveredLetters);
-            discoveredLetters.push(hint);
-            nHeart--;
-            console.log("nheart = " + nHeart);
-            updateHearts(nHeart);
-            checkIfWin();
-        }
+    console.log("gameStatus = " + gameStatus);
+    if (gameStatus !== undefined) {
+        return;
+    }
+    if (!window.confirm("Use hint will lose 1 heart, do you want to continue?")) {
+        return;
+    }
+    if (undiscoveredLetters.length !== 0) {
+        let index = Math.floor(Math.random() * undiscoveredLetters.length);
+        let hint = undiscoveredLetters[index];
+        console.log(hint);
+        undiscoveredLetters.splice(index, 1);
+        let element = document.getElementById(hint);
+        markLetterAsCorrect(element);
+        displayMaskedWord(maskedWord, undiscoveredLetters);
+        discoveredLetters.push(hint);
+        nHeart--;
+        console.log("nheart = " + nHeart);
+        updateHearts(nHeart);
+        checkIfWin();
     }
     return;
 }
