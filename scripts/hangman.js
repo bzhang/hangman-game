@@ -63,7 +63,7 @@ request.onload = function () {
                 // mark letter as discovered
                 undiscoveredLetters.splice(index, 1);
                 discoveredLetters.push(letter);
-    
+                points++;
                 markLetterAsCorrect(element);                
                 displayMaskedWord(maskedWord, undiscoveredLetters);
                 checkIfWin();
@@ -127,6 +127,9 @@ function checkIfWin() {
         gameMsgElement.textContent = "You win!";
         animationElement.classList = "animation-8";
         displayMaskedWord(word, undiscoveredLetters);
+        nWin++;
+        nGame++;
+        points += 10;
     }
 }
 
@@ -137,6 +140,7 @@ function checkIfLost() {
         gameMsgElement.textContent = "Game over!";
         animationElement.classList = "animation-7";
         displayMaskedWord(word, undiscoveredLetters); // display the entire word in grey color
+        nGame++;
         if (nHeart !== 0) {
             nHeart--;
         } else {
