@@ -29,19 +29,8 @@
         <div class="buttons">
           <button class="btn" id="resetBtn">New Game</button>
           <button class="btn" id="hintBtn">Hint</button>
-            <!-- Trigger/Open The Modal -->
-          <button class="btn" id="leaderBoardBtn">Leader Board</button>
-
-          <!-- The Modal -->
-          <div id="leaderBoardModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <div id="leaderBoardContent">
-                <p>Leader Board</p>
-              </div>
-            </div>
-          </div>
+          <!-- Trigger/Open The Modal -->
+          <button class="btn" id="leaderBoardBtn">Leader Board</button>          
         </div>
       </div>
       <div class="col-lg-6">
@@ -101,8 +90,37 @@
       <span>&copy; <a href="index.html">Word Guessing Game by Bingjun Zhang</a> 2018</span>
     </footer>
   </div>
-
-  <script src="scripts/hangman.js"></script>
 </body>
+
+<!-- The Leader Board Modal -->
+<div id="leaderBoardModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <header>
+      <span class="close">&times;</span>
+      <h2>Leader Board</h2>
+    </header>
+    <div id="leaderBoardContent">
+      <p>Leader Board</p>
+    </div>
+  </div>
+</div>
+
+<!-- The Player Name Input Modal -->
+<div id="playerModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <header>
+      <span class="close">&times;</span>
+      <h2>Leader Board</h2>
+    </header>
+    <div id="">
+      <p>Oops... All hearts gone!</p>
+      <p>Join the leader board!</p>
+    </div>
+  </div>
+</div>
+
+<script src="scripts/hangman.js"></script>
 </html>
 
