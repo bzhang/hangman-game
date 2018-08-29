@@ -83,6 +83,14 @@
     text-align: right;
 }
 
+#nHeart {
+    background-image: url(../images/heart.png);
+    height: 29px;
+    width: 96px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 #animation { 
     background-repeat: no-repeat; 
     height: 320px; 
