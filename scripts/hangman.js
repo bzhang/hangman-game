@@ -18,6 +18,7 @@ let nGame = 0;
 let leaderBoard = {};
 let playerName = "";
 let points = 0;
+let leaderBoardData = [];
 
 let request = new XMLHttpRequest();
 // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
@@ -142,7 +143,6 @@ function checkIfWin() {
         nGame++;
         points += 10;
         updatePoints();
-        console.log(nWin, nGame, points);
     }
 }
 
@@ -159,8 +159,9 @@ function checkIfLost() {
             nHeart--;
             heartElement.style.width = nHeart * 32 + "px";
         } else {
-            // TODO: pop out lightbox to record player name and points
-
+            // TODO: pop out modal to save player name and points
+            playerName = "Bingjun";
+            leaderBoardData.push({name: playerName, score: points});
         }
     }
 }
@@ -242,11 +243,6 @@ window.onclick = function(event) {
     }
 }
 // create leader board table and insert into modalContent
-let leaderBoardData = [
-    {name: "Bingjun", score: "100"},
-    {name: "Lei", score: "1"}
-];
-
 function tableCreate() {
     let tbl = document.createElement("table");
     tbl.style.width = "100%";
