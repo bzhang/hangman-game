@@ -18,7 +18,7 @@ let nGame = 0;
 let leaderBoard = {};
 let playerName = "";
 let points = 0;
-let leaderBoardData = [];
+let leaderboardData = [];
 
 let request = new XMLHttpRequest();
 // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
@@ -182,7 +182,7 @@ function checkIfLost() {
         } else {
             // TODO: pop out modal to save player name and points
             playerName = "Bingjun";
-            leaderBoardData.push({name: playerName, score: points});
+            leaderboardData.push({name: playerName, score: points});
         }
     }
 }
@@ -240,7 +240,7 @@ onload = function startAnimation() {
 } 
 
 // get the modal
-let modal = document.getElementById("leaderBoardModal");
+let modal = document.getElementById("leaderboardModal");
 // get the button that opens the modal
 let btn = document.getElementById("leaderBoardBtn");
 // get the <span> element that closes the modal
@@ -274,7 +274,7 @@ function tableCreate() {
     tbdy.appendChild(tr);
     for (let i = 0; i < 10; i++) {
         const tr = document.createElement('tr');
-        const player = leaderBoardData[i];
+        const player = leaderboardData[i];
         if (player) {
             tr.innerHTML = "<td>" + (i + 1) + "</td><td>" + player.name + "</td><td>" + player.score + "</td>";
             tbdy.appendChild(tr);
