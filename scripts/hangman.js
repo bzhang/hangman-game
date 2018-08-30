@@ -229,24 +229,24 @@ function getRandomWord(words) {
 }
 
 onload = function startAnimation() { 
-    let frameHeight = 320; 
-    let frames = 2; 
+    const frameHeight = 320; 
+    const frames = 2; 
     let frame = 0; 
-    let div = document.getElementById("animation"); 
+    const div = document.getElementById("animation"); 
     setInterval(function () { 
         let frameOffset = (++frame % frames) * -frameHeight; 
         div.style.backgroundPosition = "0px " + frameOffset + "px"; 
     }, 100); 
 } 
 
-// get the modal
+// get the leaderboard modal
 let modal = document.getElementById("leaderboardModal");
 // get the button that opens the modal
-let btn = document.getElementById("leaderBoardBtn");
+let btn = document.getElementById("leaderboardBtn");
 // get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
 // get modal content
-let modalContent = document.getElementById("leaderBoardContent");
+let modalContent = document.getElementById("leaderboardContent");
 // when the user clicks on the button, open the modal 
 btn.onclick = function() {
     modal.style.display = "block";
@@ -281,5 +281,6 @@ function tableCreate() {
         }
     }
     tbl.appendChild(tbdy);
+    modalContent.innerHTML = "";
     modalContent.appendChild(tbl);
 }
