@@ -9,12 +9,12 @@ let gameStatus = undefined;
 const animationElement = document.getElementById("animation");
 const currentWordElement = document.getElementById("currentWord");
 const gameMsgElement = document.getElementById("gameMessage");
-const heartElement = document.getElementById("nHeart");
-const nWinElement = document.getElementById("nWin");
+const heartElement = document.getElementById("nHearts");
+const nWinElement = document.getElementById("nWins");
 const pointsElement = document.getElementById("points");
-let nHeart = 3;
-let nWin = 0;
-let nGame = 0;
+let nHearts = 3;
+let nWins = 0;
+let nGames = 0;
 let leaderBoard = {};
 let playerName = "";
 let points = 0;
@@ -70,7 +70,7 @@ request.onload = function () {
                 discoveredLetters.push(letter);
                 points++;
                 updatePoints();
-                console.log(nWin, nGame, points)
+                console.log(nWins, nGames, points)
                 markLetterAsCorrect(element);                
                 displayMaskedWord(maskedWord, undiscoveredLetters);
                 checkIfWin();
@@ -101,14 +101,14 @@ function resetGame() {
         letters[i].classList.remove("wrong");
     }
     
-    console.log("nheart = " + nHeart);
-    if (nHeart === 0) {
+    console.log("nheart = " + nHearts);
+    if (nHearts === 0) {
         points = 0;
-        nGame = 0;
-        nWin = 0;
-        nHeart = 3;
+        nGames = 0;
+        nWins = 0;
+        nHearts = 3;
         updatePoints();
-        updateHearts(nHeart);
+        updateHearts(nHearts);
     }
 
     document.getElementById("gameMessage").innerHTML = "<div>Remaining guesses:</div><div id='remainingGuesses'>6</div>";
@@ -121,7 +121,7 @@ function getHint() {
     if (gameStatus !== undefined) {
         return;
     }
-    if (nHeart === 0) {
+    if (nHearts === 0) {
         window.alert("All hearts lost!");
         return;
     }
@@ -137,9 +137,9 @@ function getHint() {
         markLetterAsCorrect(element);
         displayMaskedWord(maskedWord, undiscoveredLetters);
         discoveredLetters.push(hint);
-        nHeart--;
-        console.log("nheart = " + nHeart);
-        updateHearts(nHeart);
+        nHearts--;
+        console.log("nheart = " + nHearts);
+        updateHearts(nHearts);
         checkIfWin();
     }
     return;
@@ -148,8 +148,8 @@ function getHint() {
 function markLetterAsCorrect(element) {
     element.classList.add("correct");
 }
-function updateHearts(nHeart) {
-    heartElement.style.width = nHeart * 32 + "px";
+function updateHearts(nHearts) {
+    heartElement.style.width = nHearts * 32 + "px";
 }
 
 // win the game if discovered all letters
@@ -159,8 +159,8 @@ function checkIfWin() {
         gameMsgElement.textContent = "You win!";
         animationElement.classList = "animation-8";
         displayMaskedWord(word, undiscoveredLetters);
-        nWin++;
-        nGame++;
+        nWins++;
+        nGames++;
         points += 10;
         updatePoints();
     }
@@ -173,14 +173,15 @@ function checkIfLost() {
         gameMsgElement.textContent = "Game over!";
         animationElement.classList = "animation-7";
         displayMaskedWord(word, undiscoveredLetters); // display the entire word in grey color
-        nGame++;
+        nGames++;
         updatePoints();
-        if (nHeart !== 0) {
-            nHeart--;
-            console.log("nheart = " + nHeart);
-            updateHearts(nHeart);
+        if (nHearts !== 0) {
+            nHearts--;
+            console.log("nheart = " + nHearts);
+            updateHearts(nHearts);
         } else {
             // TODO: pop out modal to save player name and points
+            saveScores();
             playerName = "Bingjun";
             leaderboardData.push({name: playerName, score: points});
         }
@@ -189,7 +190,7 @@ function checkIfLost() {
 
 // update game points
 function updatePoints() {
-    nWinElement.innerHTML = "Winning: " + nWin + "/" + nGame + " games";
+    nWinElement.innerHTML = "Winning: " + nWins + "/" + nGames + " games";
     pointsElement.innerHTML = points + " points";
 }
 
@@ -239,48 +240,57 @@ onload = function startAnimation() {
     }, 100); 
 } 
 
-// get the leaderboard modal
-let modal = document.getElementById("leaderboardModal");
-// get the button that opens the modal
-let btn = document.getElementById("leaderboardBtn");
-// get the <span> element that closes the modal
-let span = document.getElementsByClassName("close")[0];
-// get modal content
-let modalContent = document.getElementById("leaderboardContent");
-// when the user clicks on the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
-    // modalContent.innerHTML = "Leader Board<br>Bingjun<br>100";
-    tableCreate();
-}
-// when the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-// when the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
+createLeaderboard();
+function createLeaderboard() {
+    // get the leaderboard modal
+    const modal = document.getElementById("leaderboardModal");
+    // get the button that opens the modal
+    const btn = document.getElementById("leaderboardBtn");
+    // get the <span> element that closes the modal
+    const span = document.getElementsByClassName("close")[0];
+    // get modal content
+    const modalContent = document.getElementById("leaderboardContent");
+    // when the user clicks on the button, open the modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+        // modalContent.innerHTML = "Leader Board<br>Bingjun<br>100";
+        createTable();
+    }
+    // when the user clicks on <span> (x), close the modal
+    span.onclick = function() {
         modal.style.display = "none";
     }
-}
-// create leader board table and insert into modalContent
-function tableCreate() {
-    let tbl = document.createElement("table");
-    tbl.style.width = "100%";
-    tbl.setAttribute("border", "0");
-    let tbdy = document.createElement("tbody");
-    const tr = document.createElement("tr");
-    tr.innerHTML = "<th>Rank</th><th>Player</th><th>Score</th>";
-    tbdy.appendChild(tr);
-    for (let i = 0; i < 10; i++) {
-        const tr = document.createElement('tr');
-        const player = leaderboardData[i];
-        if (player) {
-            tr.innerHTML = "<td>" + (i + 1) + "</td><td>" + player.name + "</td><td>" + player.score + "</td>";
-            tbdy.appendChild(tr);
+    // when the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
     }
-    tbl.appendChild(tbdy);
-    modalContent.innerHTML = "";
-    modalContent.appendChild(tbl);
+    // create leader board table and insert into modalContent
+    function createTable() {
+        let tbl = document.createElement("table");
+        tbl.style.width = "100%";
+        tbl.setAttribute("border", "0");
+        let tbdy = document.createElement("tbody");
+        const tr = document.createElement("tr");
+        tr.innerHTML = "<th>Rank</th><th>Player</th><th>Score</th>";
+        tbdy.appendChild(tr);
+        for (let i = 0; i < 10; i++) { // display top 10 scores
+            const tr = document.createElement('tr');
+            const player = leaderboardData[i];
+            if (player) {
+                tr.innerHTML = "<td>" + (i + 1) + "</td><td>" + player.name + "</td><td>" + player.score + "</td>";
+                tbdy.appendChild(tr);
+            }
+        }
+        tbl.appendChild(tbdy);
+        modalContent.innerHTML = "";
+        modalContent.appendChild(tbl);
+    }
+}
+
+// save player name and score to leaderboard
+function saveScores(leaderboardData, points) {
+    const modal = document.getElementById("playerModal");
+    // const 
 }
