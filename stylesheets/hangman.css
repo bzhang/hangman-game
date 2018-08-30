@@ -98,6 +98,10 @@
     margin: 0 auto;
 }
 
+.animation-0 {
+    background-image: url(../images/0.png);
+}
+
 .animation-1 {
     background-image: url(../images/1.png);
 }
@@ -124,10 +128,6 @@
 
 .animation-7 {
     background-image: url(../images/7.png);
-}
-
-.animation-8 {
-    background-image: url(../images/8.png);
 }
 
 /* #leaderBoardContent {
