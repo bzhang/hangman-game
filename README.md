@@ -63,7 +63,8 @@ This is the step where I need to represent the game by abstract concepts that ca
 5. Check if all the unique letters of the word are discovered
   - end the game and mark as win
 6. If game ended, no action on clicking any letter
-After sorting out the core logic, I wrote it in Javascript (hangman.js) and tested it with mock data until it yielded the correct results. 
+
+After sorting out the core logic, I wrote it in Javascript (hangman.js) and tested it with mock data until it yielded correct results. 
 
 #### The UI
 I first built a simple and static webpage (index.html) to display the main UI components. 
@@ -77,4 +78,15 @@ A CSS file (hangman.css) was created to add the styles.
 
 After the essential UI was built, I added code to manipulate DOM elements and make the simplest version of the game alive.
 
-### Adding new features
+### Adding features
+Several features were implemented but I started with the must-have and simple ones. 
+#### Request random word from the provided dictionary API
+One challenge here was the cross domain data accessing. I first thought the required header for Cross-origin resource sharing (CORS) was simply missing from the API. I figured there were Chrome extentions that enables CORS. I used one of the extentions to unblock my progress. Meanwhile, I contacted the tech team to report this issue and learnt that it was part of the challenge. I then figured some other ways (e.g., adding CORS proxy) to work around it. It was fun to learn these tricks.
+#### Reset the game by clicking on "New Game" button
+The interesting challenge here was the increasing complexity as new features added. It was pretty clear and easy at the begginning since the game was simple and not many variables need to be reset. As more and more new features added, many variables need to be explicitly reset and it became so cumbersome. This was one of the reasons that I decided to refactor the entire app later. I will explain that in the [OOP Refactor sections](https://github.com/bzhang/hangman-game#oop-refactor) below.
+#### Small UI improvements
+- Display correctly guessed letter in green color and wrongly guessed letter in red
+- When game ended, display word in green color if won and in grey if lost
+- Display the number of remianing guesses and win/lose messages
+
+### OOP refactor
