@@ -121,20 +121,22 @@ The current code consists of three main files: index.html, hangman.css and hangm
 ### index.html
 
 The main body of HTML including the following sections:
-navbar sections displaying the logo image and game title
-container div
-First row div for buttons and game status UI
-Second row
-First column: currentWord div and keyboard div
-Second column: gameMessage div and animation div
-leaderboardModal div and script 
+- navbar sections displaying the logo image and game title
+  - container div
+    - First row 
+      - div for buttons and game status UI
+    - Second row
+      - First column: currentWord div and keyboard div
+      - Second column: gameMessage div and animation div
+- leaderboardModal div
+- link to script 
 
 ### hangman.css
 
 This file defines styles for 
-regular UI components, including keyboards and letters, buttons, and text
-animations
-leaderboardModal
+- regular UI components, including keyboards and letters, buttons, and text
+- animations
+- leaderboardModal
 
 ### hangman.js
 
