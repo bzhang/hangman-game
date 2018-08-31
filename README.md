@@ -10,12 +10,14 @@ To play the game, simply clone or download the source code to your computer. Ope
 4. The player loses the current game if guessed incorrectly for 6 times.
 5. Click on the "New Game" button to guess a new word.
 5. Each player has 3 lives that are represented by red hearts in the game. Losing 1 game will lose the player 1 heart. 
-6. The player can use hint to help guessing one letter at each time. But using a hint will lose the player 1 heart.
+6. The player can use hint by click on the "hint" button to help guessing one letter at each time. But using a hint will lose the player 1 heart.
 7. The game ended for each player when all hearts are lost. 
 8. If the final score is one of the top 10 scores, the player can add his/her name to join the leaderboard. If name is not provided, the player will be logged as "Anonymous Player".
 8. Leaderboard can be checked any time during the game by clicking on the "Leaderboard" button.
 
 ## For faster dictionary loading at the start
+The entire dictionary is loaded at each refresh of the webpage, which takes several seconds. Clicking on the "new game" button will not refresh the webpage so there will be no waiting time for that.
+
 The dictionary API does not allow cross domain access. There are at least 3 ways to work around it.
 
 1. The current code is using a CORS proxy (https://cors-proxy.htmldriven.com) to work around it. 
