@@ -1,8 +1,8 @@
 function fetchWords(callback) {
     let request = new XMLHttpRequest();
     // use proxy to work around CORS issue
-    // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
-    const url = "http://app.linkedin-reach.io/words"; // use this URL if already installed CORS Chrome extention
+    const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
+    // const url = "http://app.linkedin-reach.io/words"; // use this URL if already installed CORS Chrome extention
     request.open("GET", url, true);
     request.onload = function () {
         const words = request.response.split("\n");
