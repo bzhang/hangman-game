@@ -1,11 +1,14 @@
 function fetchWords(callback) {
     let request = new XMLHttpRequest();
     // use proxy to work around CORS issue
-    const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
+    const url = "https://cors-proxy.htmldriven.com/?url=http://app.linkedin-reach.io/words";
+    // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words"; // backup CORS proxy
     // const url = "http://app.linkedin-reach.io/words"; // use this URL if already installed CORS Chrome extention
     request.open("GET", url, true);
     request.onload = function () {
-        const words = request.response.split("\n");
+        const httpResponse = JSON.parse(request.response).body;
+        // const httpResponse = request.response; // backup CORS proxy
+        const words = httpResponse.split("\n");
         callback(words);
     }
     request.send();
@@ -14,6 +17,7 @@ function fetchWords(callback) {
 function Game() {
     const word = Game.getRandomWord();
     const undiscoveredLetters = Game.getUniqueChars(word);
+    console.log(word);
     console.log(undiscoveredLetters);
     const discoveredLetters = [];
     const wrongGuesses = [];
