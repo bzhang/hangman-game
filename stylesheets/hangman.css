@@ -78,12 +78,12 @@
     border-radius: 15px;
 }
 
-#nWin, #points {
+#nWins, #points {
     font-size: 16px;
     text-align: right;
 }
 
-#nHeart {
+#nHearts {
     background-image: url(../images/heart.png);
     height: 29px;
     width: 96px;
