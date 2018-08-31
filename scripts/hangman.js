@@ -2,12 +2,16 @@ function fetchWords(callback) {
     let request = new XMLHttpRequest();
     // use proxy to work around CORS issue
     const url = "https://cors-proxy.htmldriven.com/?url=http://app.linkedin-reach.io/words";
-    // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words"; // backup CORS proxy
-    // const url = "http://app.linkedin-reach.io/words"; // use this URL if already installed CORS Chrome extention
+    // commnent the following line to use the backup CORS proxy, faster but only work in Chrome
+    // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
+    // use this URL if already installed CORS Chrome extention, a lot faster than using CORS proxy
+    // const url = "http://app.linkedin-reach.io/words";
     request.open("GET", url, true);
     request.onload = function () {
-        const httpResponse = JSON.parse(request.response).body;
-        // const httpResponse = request.response; // backup CORS proxy
+        // comment the following line if using backup CORS proxy or CORS Chrome extention
+        const httpResponse = JSON.parse(request.response).body; 
+        // uncomment the following line if using backup CORS proxy or CORS Chrome extention
+        // const httpResponse = request.response; 
         const words = httpResponse.split("\n");
         callback(words);
     }
