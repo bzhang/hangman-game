@@ -1,7 +1,7 @@
 # Bingjun's word guessing game
 
 ## How to run the game
-To play the game, simply clone or download the source code to your computer. Open index.html in a web browser and start playing!
+To play the game, simply clone or download the source code to your computer. Open index.html in a web browser and start playing! For easier testing different features, you can check the current word in the console panel in developer tools. In Chrome, open console panel from the menu View - Developer - Developer Tools or press keyboard shortcut Option + Command + I. 
 
 ### Game rules
 1. Game starts with a set of underscores that represents an undiscovered word. Click on any letter to make a guess. 
@@ -92,9 +92,9 @@ I use hearts to represents player's lives in the game. Each player has 3 lives. 
 The leaderboard is one of the main features. The idea was to save score for each player and add to a leaderboard. Clicking on the "Leaderboard" button at any time will display the ranked players and scores. There were several fun challenges during the implementation and I learnt a lot.
 - One of the UI challenges here was how to make a modal box with Javascript and CSS. I did some research and learnt how to implement that to display a pretty box each time clicking on the "Leaderboard" button and hide the box when clicking on the close button. 
 - Add the updated leaderboard data to the modal box and display it correctly. I created table from the sorted leaderboard data and added it to the modal content.
-- Request player name if the final score is high enough to join the leaderboard. If player decides to not share his/her name, the name will be saved as "Anonymous Player".
+- Prompt a dialog to request player name if the final score is high enough to join the leaderboard when game ended. If player decides to not share his/her name, the name will be saved as "Anonymous Player". An interesting observation was that, although in the script I update UI before prompting the dialog, the UI will not be updated until the prompt request finished. I did some research and found that it was actually because the browser decides to prompt first before exacuting the scheduled UI updates. I need to force the UI to reflow before the prompt. The solution is to wrap the prompt method in window.setTimeout() to delay it for 5 milliseconds. It will not be noticed by the user but will allow the UI to update before prompt.
 #### Animations to show the game progress
-These are the first set of animations I have ever implemented and I think they are super cool!  
+These are the first set of animations I have ever implemented and I think they are super cool! I learnt that there is a simple way to build animation in Javascript without using any external libraries called sprite animation. The basic idea is, for each animation, make a Sprite image that consists all the frames of the animation and use Javascript to move the image to display the frames sequentially. I then made 8 Sprite images with an image editing software. Each consists of 2 frames for my simple animation. I set the Sprite image as the background image of the animation div. I then wrote Javascript code to move the image according to the frame height and frame numbers. The final results were a serial of dancing figures with changing faces for each game step. The effects are very entertaining.
 #### Small UI improvements
 - Display correctly guessed letter in green color and wrongly guessed letter in red
 - When game ended, display word in green color if won and in grey if lost
