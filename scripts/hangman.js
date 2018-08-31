@@ -251,7 +251,9 @@ fetchWords(function (wordList) {
             player.registerGameStatus(game.status);
             ui.updatePlayerStatus(player);
             if (game.status !== undefined && player.nHearts <= 0) {
-                leaderboard.savePlayerScore(player.points);
+                window.setTimeout(function () { // use setTimeout to reflow the UI before prompt for player name
+                    leaderboard.savePlayerScore(player.points);
+                }, 5);
             }
         });
     }
