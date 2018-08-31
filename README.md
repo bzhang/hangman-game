@@ -1,7 +1,9 @@
 # Bingjun's Word Guessing Game
 
 ## How to run the game
-To play the game, simply clone or download the source code to your computer. Open index.html in a web browser and start playing! For easier testing different features, you can check the current word in the console panel in developer tools. In Chrome, open console panel from the menu View - Developer - Developer Tools or press keyboard shortcut Option + Command + I. 
+To play the game, simply clone or download the source code to your computer. Open index.html in a web browser and start playing! 
+
+For easier testing different features, you can check the current word in the console panel in developer tools. In Chrome, open console panel from the menu View - Developer - Developer Tools or press keyboard shortcut Option + Command + I. 
 
 ### Game rules
 1. Game starts with a set of underscores that represents an undiscovered word. Click on any letter to make a guess. 
