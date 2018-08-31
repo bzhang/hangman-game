@@ -36,17 +36,17 @@ And uncomment these.
 // const httpResponse = request.response;
 ```
 
-3. The fastest way to work around it is to install Chrome extentions that can disable CORS. There are several extentions serve that. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This method will load the dictionary rapidly but only work in Chrome.
+3. The fastest way to work around it is to install Chrome extentions that can disable CORS. There are several extentions serve that purpose. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This method will load the dictionary rapidly but only work in Chrome and requires extention installation.
 
 ## My thought and building process
 ### Why did I choose Javascript to write this game
 When I got this project, the first thing I considered was which language I should choose. I am more familiar in Java programming but started learning Javascript recently because of my growing interest in front-end development and creating interesting interactions on webpages. I was very excited to have this learning opportunity to write my first Javascript project. It turned out that I had so much fun during this project!
 
 ### How did I start building it
-Big problems are nothing more than a collection of little problems. Every time I got a problem, the first step is to break it down into solvable component problems that I can actually solve in reasonable time. As for the simplest version of the game, I can first break it into two main components: the core logic of the implementation and the UI. I will later break each component into even smaller ones. 
+Big problems are nothing more than a collection of little problems. Every time I got a problem, the first step is to break it down into solvable component problems that I can actually solve within reasonable time. As for the simplest version of the game, I first broke it down into two main components: the core logic of the implementation and the UI. Later during the implementation, I then broke each component into even smaller ones. 
 
 #### The core logic
-This is the step where I need to represent the game by abstract concepts that can be transformed into lines of code later. I first tried to understand the core logic by going through each steps of the game. I wrote and drew the input/output and possible variables for each game operation on a piece of paper. 
+This is the step where I need to represent the game by abstract concepts that can be transformed into lines of code later. I first tried to understand the core logic by going through each steps of the game. I wrote and drew the input/output and possible variables needed for each game operation on a piece of paper. 
 1. Obtain a random word from dictionary for guessing
   - need a variable to store the word
   - need an array to store unique and undiscovered letters generated from the word
@@ -72,13 +72,13 @@ I first built a simple and static webpage (index.html) to display the main UI co
 - a section for displaying the guessing progress
 - a keyboard of letters
 - a section for displaying the number of remaining guesses or the game status (win or lose)
-These are all the essential UI components for the game. Other components are added later when adding new features.
+These are all the essential UI components for the game. Other components are added later when adding new features and extensions.
 
 A CSS file (hangman.css) was created to add the styles.
 
 After the essential UI was built, I added code to manipulate DOM elements and make the simplest version of the game alive.
 
-### Adding features
+### Adding features and extentions
 Several features were implemented but I started with the must-have and simple ones. 
 #### Request random word from the provided dictionary API
 One challenge here was the cross domain data accessing. I first thought the required header for Cross-origin resource sharing (CORS) was simply missing from the API. I figured there were Chrome extentions that enables CORS. I used one of the extentions to unblock my progress. Meanwhile, I contacted the tech team to report this issue and learnt that it was part of the challenge. I then figured some other ways (e.g., adding CORS proxy) to work around it. It was fun to learn these tricks.
@@ -102,3 +102,12 @@ These are the first set of animations I have ever implemented and I think they a
 - Display and update current game scores and player's remaining lives
 
 ### OOP refactor
+When I added more and more features to the game, I realized that my code became very cumbersome and error-prone. I have noticed a few problems or bad practices.
+
+1. There are too many public variables exposed directly, which is not the best practice for safty reasons. Adding a new feature usually involves adding new variables. I declared more and more public variables since the methods were not packaged properly in private scopes. I first started cleaning my code by extracting methods and creating private scopes. That made the code clearer but the logic was still not clear enough. 
+
+2. Due to the increasing complexity, resetting the game became more and more cumbersome since I had to explicitly reset every single varable. This practice is error-prone because some variables may be missing thus causing problems. This is when I started thinking about redesigning my app structure and applying OOP techniques. I could simply create a new object for each new game instead of explicitly reset all variables. In that way, many bugs will be avoided by design. 
+
+3. When adding the leaderboard to the game, I had to add the Player component, which add another reason to refactor the code and enclose all the player related variables into the player object. Similarly, other components like Game component, UI component should be kept in their own scopes rather than exposing variables to public. 
+
+Within these thought in mind, I started to redesign the architecture  
