@@ -39,3 +39,7 @@ And uncomment these.
 3. The fastest way to work around it is to install Chrome extentions that can disable CORS. There are several extentions serve that. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This method will load the dictionary rapidly but only work in Chrome.
 
 ## My thought process
+### Why did I choose Javascript to write this game
+When I got this project, the first thing I considered is which language I should choose. I am more familiar in Java programming but started learning Javascript recently because my growing interest in front-end development and creating interesting interactions on webpages. So I was very excited to have this learning opportunity to write my first Javascript project. And it turned out that I had so much fun during this project!
+
+### How did I start building it
