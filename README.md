@@ -82,11 +82,23 @@ After the essential UI was built, I added code to manipulate DOM elements and ma
 Several features were implemented but I started with the must-have and simple ones. 
 #### Request random word from the provided dictionary API
 One challenge here was the cross domain data accessing. I first thought the required header for Cross-origin resource sharing (CORS) was simply missing from the API. I figured there were Chrome extentions that enables CORS. I used one of the extentions to unblock my progress. Meanwhile, I contacted the tech team to report this issue and learnt that it was part of the challenge. I then figured some other ways (e.g., adding CORS proxy) to work around it. It was fun to learn these tricks.
-#### Reset the game by clicking on "New Game" button
+#### Reset the game by clicking on the "New Game" button
 The interesting challenge here was the increasing complexity as new features added. It was pretty clear and easy at the begginning since the game was simple and not many variables need to be reset. As more and more new features added, many variables need to be explicitly reset and it became so cumbersome. This was one of the reasons that I decided to refactor the entire app later. I will explain that in the [OOP Refactor sections](https://github.com/bzhang/hangman-game#oop-refactor) below.
+#### Get a hint by clicking on the "Hint" button
+I designed this feature to add more fun to the game. Each hint unveils one correct letter. Of course hint shouldn't be unlimited so I added score and lives to make the game a lot more interesting.
+#### The score system
+I use hearts to represents player's lives in the game. Each player has 3 lives. Lost a game or using a hint will lose the player 1 heart. Correct guesses on letters and word will earn points. The final score is calculated when the player lost all 3 hearts.
+#### The leaderboard
+The leaderboard is one of the main features. The idea was to save score for each player and add to a leaderboard. Clicking on the "Leaderboard" button at any time will display the ranked players and scores. There were several fun challenges during the implementation and I learnt a lot.
+- One of the UI challenges here was how to make a modal box with Javascript and CSS. I did some research and learnt how to implement that to display a pretty box each time clicking on the "Leaderboard" button and hide the box when clicking on the close button. 
+- Add the updated leaderboard data to the modal box and display it correctly. I created table from the sorted leaderboard data and added it to the modal content.
+- Request player name if the final score is high enough to join the leaderboard. If player decides to not share his/her name, the name will be saved as "Anonymous Player".
+#### Animations to show the game progress
+These are the first set of animations I have ever implemented and I think they are super cool!  
 #### Small UI improvements
 - Display correctly guessed letter in green color and wrongly guessed letter in red
 - When game ended, display word in green color if won and in grey if lost
-- Display the number of remianing guesses and win/lose messages
+- Display and update the number of remianing guesses and win/lose messages
+- Display and update current game scores and player's remaining lives
 
 ### OOP refactor
