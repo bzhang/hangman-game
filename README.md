@@ -31,7 +31,7 @@ The dictionary API does not allow cross domain access. There are at least 2 ways
 
 Among several proxies that I have tested, this one works in Chrome without additional configurations. In Safari, it can also run with the "Disable Cross-Origin Restrictions" option checked in the Develop menu.
 
-3. The fastest way is to install a Chrome extension that disables CORS restriction. There are several of them serving this purpose. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This approach loads the dictionary fastest but does not work in other browsers without the extension.
+2. The fastest way is to install a Chrome extension that disables CORS restriction. There are several of them serving this purpose. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This approach loads the dictionary fastest but does not work in other browsers without the extension.
 
 ## My thought and implementation process
 
