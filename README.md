@@ -1,105 +1,153 @@
 # Bingjun's Word Guessing Game
 
 ## How to run the game
+
 To play the game, simply clone or download the source code to your computer. Open index.html in a web browser and start playing! 
 
-For easier testing different features, you can check the current word in the console panel in developer tools. In Chrome, open console panel from the menu View - Developer - Developer Tools or press keyboard shortcut Option + Command + I. 
+For easier testing and debugging, the correct word will be logged into the console. You can check it in the Console panel in Developer Tools. In Chrome, open Console panel from the menu View - Developer - Developer Tools or press keyboard shortcut Option + Command + I. 
 
 ### Game rules
+
 1. Game starts with a set of underscores that represents an undiscovered word. Click on any letter to make a guess. 
 2. Correct guesses are marked in green color and unveiled in the undiscovered word. Wrong guesses are shown in red color.
-3. Each correct letter guess earns the player 1 point. Correctly guessed one word earns the player 10 points.
-4. The player loses the current game if guessed incorrectly for 6 times.
-5. Click on the "New Game" button to guess a new word.
-5. Each player has 3 lives that are represented by red hearts in the game. Losing 1 game will lose the player 1 heart. 
-6. The player can use hint by click on the "hint" button to help guessing one letter at each time. But using a hint will lose the player 1 heart.
-7. The game ended for each player when all hearts are lost. 
-8. If the final score is one of the top 10 scores, the player can add his/her name to join the leaderboard. If name is not provided, the player will be logged as "Anonymous Player".
-8. Leaderboard can be checked any time during the game by clicking on the "Leaderboard" button.
+3. Each correct letter guess earns the player 1 point. Correctly guessing one whole word earns the player 10 points.
+4. The player loses the current game if he/she guesses incorrectly for 6 times.
+5. Click on the "New Game" button to restart with a new word.
+6. Each player has 3 lives that are represented by red hearts in the UI. Each lost game takes 1 heart away.
+7. The player can ask for a hint by click on the "Hint" button, which guarentees a correct guess. But it also takes 1 heart.
+8. The game ends for the player when all hearts are lost. 
+9. If the final score is one of the top 10, the player can add his/her name to join the leaderboard. If name is not provided, the score will be recorded as from "Anonymous Player".
+10. Leaderboard can be displayed at any time during the game by clicking on the "Leaderboard" button.
 
 ### For faster dictionary loading at the start
-The entire dictionary is loaded at each refresh of the webpage, which takes several seconds. Clicking on the "new game" button will not refresh the webpage so there will be no waiting time for that.
+
+The entire dictionary is loaded from remote server every time the page refreshes, and it takes several seconds. (Clicking on the "New Game" button does not refresh the page so there is no waiting time for that.)
 
 The dictionary API does not allow cross domain access. There are at least 3 ways to work around it.
 
-1. The current code is using a CORS proxy (https://cors-proxy.htmldriven.com) to work around it. 
+1. The current implementation uses a CORS proxy (https://cors-proxy.htmldriven.com) to set CORS headers. 
 
-Within the several proxies I have tested, this one does not require HTTP header so it will work in both Chrome and Safari but slightly slower in Chrome than in Safari.
+Among several proxies that I have tested, this one works in both Chrome and Safari but is slightly slower in Chrome than in Safari.
 
 2. Another proxy (https://cors-anywhere.herokuapp.com) is a lot faster but only works in Chrome. 
-To use it, please comment these lines of code.
+
+To use this one instead, comment out following lines:
+
 ```javascript
 const url = "https://cors-proxy.htmldriven.com/?url=http://app.linkedin-reach.io/words";
 const httpResponse = JSON.parse(request.response).body;
 ```
-And uncomment these.
+
+And uncomment these:
+
 ```javascript
 // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
 // const httpResponse = request.response;
 ```
 
-3. The fastest way to work around it is to install Chrome extensions that can disable CORS. There are several extensions serve that purpose. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This method will load the dictionary rapidly but only work in Chrome and requires extension installation.
+3. The fastest way is to install a Chrome extension that disables CORS restriction. There are several of them serving this purpose. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This approach loads the dictionary fastest but does not work in other browsers without the extension.
 
-## My thought and building process
-### Why did I choose JavaScript to write this game
-When I got this project, the first thing I considered was which language I should choose. I am more familiar in Java programming but started learning JavaScript recently because of my growing interest in front-end development and creating interesting interactions on webpages. I was very excited to have this learning opportunity to write my first JavaScript project. It turned out that I had so much fun during this project!
+## My thought and implementation process
 
-### How did I start building it
-Big problems are nothing more than a collection of little problems. Every time I got a problem, the first step is to break it down into solvable component problems that I can actually solve within reasonable time. As for the simplest version of the game, I first broke it down into two main components: the core logic of the implementation and the UI. Later during the implementation, I then broke each component into even smaller ones. 
+### Why I chose JavaScript
 
-#### The core logic
-This is the step where I need to represent the game by abstract concepts that can be transformed into lines of code later. I first tried to understand the core logic by going through each steps of the game. I wrote and drew the input/output and possible variables needed for each game operation on a piece of paper. 
-1. Obtain a random word from dictionary for guessing
-  - need a variable to store the word
-  - need an array to store unique and undiscovered letters generated from the word
-2. Obtain the guessed letter from the player
-  - need a variable to store the guessed letter
-3. Check if the guessed letter is one of the undiscovered letters to determine if this is a correct or wrong guess
-  - take the letter out of undiscovered letters
-  - store correct and wrong guesses into two arrays, separately
-4. Check if the number of wrong guesses is smaller than 6
-  - If yes, continue guessing next letter
-    - if the letter was clicked before (either in correct array or wrong array), no action
-    - if never guessed, continue to step 3
-  - If no, end the game and mark as lost
-5. Check if all the unique letters of the word are discovered
-  - end the game and mark as win
-6. If game ended, no action on clicking any letter
+When I was about to start this project, the first thing came to my mind was which language I should choose. I am more familiar with Java from previous academic experiences, and only started learning JavaScript recently. However, I am increasingly interested in web front-end development, and this is an exciting learning opportunity to build my first JavaScript project. It turned out to be very rewarding, and I had so much fun during the week!
 
-After sorting out the core logic, I wrote it in JavaScript (hangman.js) and tested it with mock data until it yielded correct results. 
+### How I started
 
-#### The UI
-I first built a simple and static webpage (index.html) to display the main UI components. 
-- a navbar for displaying the game title
-- a section for displaying the guessing progress
-- a keyboard of letters
-- a section for displaying the number of remaining guesses or the game status (win or lose)
-These are all the essential UI components for the game. Other components are added later when adding new features and extensions.
+Big problems are nothing more than a collection of small problems. Each time I face a problem, I always try to break it down into smaller solvable problems that I can solve within a reasonable amount of time.
 
-A CSS file (hangman.css) was created to add the styles.
+To implement the simplest version of the game, I first broke it down into two main components -- data logic and UI logic. As the project evolves, I broke both down into even smaller pieces.
 
-After the essential UI was built, I added code to manipulate DOM elements and make the simplest version of the game alive.
+#### Data logic
+
+I first carefully went through all requirements and game rules to define the basic concepts and relationships between them. Then I abstracted data structures and diagrams to represent each of them. All of these were done on a piece of paper.
+
+1. I need a random word from the dictionary for player to guess.
+  - So I need a variable to store the word.
+  - I also need to know what unique letters the word has, and store them in an array.
+  - I need to know which letters have been guessed, and if the guesses are correct.
+    - So I decided to use two more arrays for that, one for correct guesses, one for incorrect ones.
+2. I need to receive a letter that player guessed, and see if it's correct.
+  - So I need a variable to store the guessed letter.
+  - Compare it with correct/incorrect guesses to make sure it hasn't been guessed.
+  - Compare it with undiscovered letters to see if it's a correct guess.
+  - If yes, take the letter out of undiscovered letters.
+  - Update correct or incorrect guesses array accordingly.
+3. Did the player win?
+  - Yes if all unique letters are discovered, which means the undiscovered letters array is empty.
+  - End the game and declare victory.
+4. Did the player lose?
+  - Yes if number of wrong guesses is 6, so we just check the length of that array.
+  - Game over.
+5. If the game is still not over, take another guess.
+  - Back to step 2.
+
+After sorting out the core logic, I wrote it down in JavaScript (hangman.js), debugged with mock data, until it yielded correct results. I didn't have UI at this point, so I used browser console as the temporary UI.
+
+#### UI logic
+
+I first built a simple static webpage (index.html) with most essential UI components:
+
+- A keyboard of letters.
+- An area above the keyboard for displaying the masked word.
+- A sidebar for displaying game status like number of remaining guesses.
+
+More UI components were later added while new features and extensions were implemented.
+
+I used Bootstrap and a custom CSS file (hangman.css) to make the UI look nicer.
+
+I added "click" event listener to each letter key on the keyboard, which calls the core data logic to update data structures. Then I read the latest game status and update UI components accordingly.
+
+1. What letter did the player guess?
+  - Read from the text content of the element.
+  - Don't check it if it's already guessed.
+  - Don't check it if game has ended.
+2. Was it a correct guess?
+  - Mark the letter key in green color.
+  - Re-mask the word so that discovered letters are no longer masked.
+3. Was it a wrong guess?
+  - Mark the letter key in red color.
+4. Did the player lose?
+  - Unmask the word.
+5. Update UI to refresh the latest game status.
 
 ### Adding features and extensions
-Several features were implemented but I started with the must-have and simple ones. 
-#### Request random word from the provided dictionary API
-One challenge here was the cross domain data accessing. I first thought the required header for Cross-origin resource sharing (CORS) was simply missing from the API. I figured there were Chrome extension that enables CORS. I used one of the extensions to unblock my progress. Meanwhile, I contacted the tech team to report this issue and learnt that it was part of the challenge. I then figured some other ways (e.g., adding CORS proxy) to work around it. It was fun to learn these tricks.
-#### Reset the game by clicking on the "New Game" button
-The interesting challenge here was the increasing complexity as new features added. It was pretty clear and easy at the beginning since the game was simple and not many variables need to be reset. As more and more new features added, many variables need to be explicitly reset and it became so cumbersome. This was one of the reasons that I decided to refactor the entire app later. I will explain that in the [OOP Refactor sections](https://github.com/bzhang/hangman-game#oop-refactor) below.
-#### Get a hint by clicking on the "Hint" button
-I designed this feature to add more fun to the game. Each hint unveils one correct letter. Of course hint shouldn't be unlimited so I added score and lives to make the game a lot more interesting.
-#### The score system
-I use hearts to represents player's lives in the game. Each player has 3 lives. Lost a game or using a hint will lose the player 1 heart. Correct guesses on letters and word will earn points. The final score is calculated when the player lost all 3 hearts.
-#### The leaderboard
-The leaderboard is one of the main features. The idea was to save score for each player and add to a leaderboard. Clicking on the "Leaderboard" button at any time will display the ranked players and scores. There were several fun challenges during the implementation and I learnt a lot.
-- One of the UI challenges here was how to make a modal box with JavaScript and CSS. I did some research and learnt how to implement that to display a pretty box each time clicking on the "Leaderboard" button and hide the box when clicking on the close button. 
-- Add the updated leaderboard data to the modal box and display it correctly. I created table from the sorted leaderboard data and added it to the modal content.
-- Prompt a dialog to request player name if the final score is high enough to join the leaderboard when game ended. If player decides to not share his/her name, the name will be saved as "Anonymous Player". An interesting observation was that, although in the script I update UI before prompting the dialog, the UI will not be updated until the prompt request finished. I did some research and found that it was actually because the browser decides to prompt first before executing the scheduled UI updates. I need to force the UI to reflow before the prompt. The solution is to wrap the prompt method in window.setTimeout() to delay it for 5 milliseconds. It will not be noticed by the user but will allow the UI to update before prompt.
-- The leaderboard data is saved into local storage so that the same data can be accessed across different games. Refreshing the page will not lose the data.
 
-#### Animations to show the game progress
-These are the first set of animations I have ever implemented and I think they are super cool! I learnt that there is a simple way to build animation in JavaScript without using any external libraries called sprite animation. The basic idea is, for each animation, make a Sprite image that consists all the frames of the animation and use JavaScript to move the image to display the frames sequentially. I then made 8 Sprite images with an image editing software. Each consists of 2 frames for my simple animation. I set the Sprite image as the background image of the animation div. I then wrote JavaScript code to move the image according to the frame height and frame numbers. The final results were a serial of dancing figures with changing faces for each game step. The effects are very entertaining.
+Several features were implemented but I started with the must-have and simple ones. 
+
+#### Load dictionary from the provided dictionary API and pick a random word
+
+One challenge here was the cross-domain AJAX request. I first thought it was a bug in the dictionary API that the required CORS header was simply missing. I figured there are Chrome extensions that can turns off CORS restrictions and allow me to unblock myself, so I did that. In the meanwhile, I reported the "bug" to the team and learned that it's actually part of this challenge. So I tried some other approaches and decided to use a CORS proxy. It was fun to learn these tricks.
+
+#### Reset the game by clicking on the "New Game" button
+
+The interesting challenge here was the increasing complexity as new features were added. At first, resetting the game was fairly easy and straightforward, because not many variables needed to be reset. As the game evolves, the reset logic became a lot more cumbersome, which made me decide to refactor the whole game completely. I will explain that in the [OOP Refactor sections](https://github.com/bzhang/hangman-game#oop-refactor) below.
+
+#### Get a hint by clicking on the "Hint" button
+
+I designed this feature to add more fun to the game. Each hint unveils one correct letter. Of course hint shouldn't be unlimited so I added scores, hearts and multiple rounds of games so that hinting would make sense to the player. This unfortunately introduced even more complexity which made a complete refactoring necessary.
+
+#### The score/heart system
+
+I used hearts to represents the player's in-game lives. Each player has 3 lives. Losing a game or using a hint costs them 1 heart. Correctly guessing letters and words will reward them with points. A final score is calculated when the player loses all 3 hearts.
+
+#### The leaderboard
+
+Now that we have player scores, a leaderboard would make total sense, and it's a major feature. The leaderboard keeps track of top 10 high scores and player names. Clicking on the "Leaderboard" button at any time will display the ranking. There were several fun challenges during the implementation and I learned a lot from them.
+
+- One UI challenge was to make a modal dialog in JavaScript and CSS, which I have never done before. I did some research, learned the basic ideas about how to show the element, how position it properly, how to fill in content, how to hide it, and how to show it again next time.
+- How to build a leaderboard table. I learned about dynamically creating and inserting DOM elements, and updating inner HTML of them, which are super cool.
+- How to sort an array of objects (which contain names and scores) using a compare function.
+- Request player name if the final score is high enough to join the leaderboard when game ended. If player decides to not share his/her name, the name will be saved as "Anonymous Player". An interesting observation was that, although in the script I update DOM elements before presenting a prompt dialog, these element are not updated, until the prompt dialog is closed. I did some research and found that it was actually because the browser schedules DOM updates at a later time, for performance reasons, but shows prompt dialogs immediately, before executing the scheduled DOM updates. I had to make sure a "reflow" happens before I request for a prompt dialog. My solution is to wrap the prompt method in a `window.setTimeout()` and delay it for 5 milliseconds. This is not noticeable by the player, but allows the UI to update before the prompt.
+- The leaderboard data is stored in Local Storage so that it survives page reload.
+
+#### Animation
+
+These are the first set of animations I have ever implemented and I think they are super cool! I learned that there is a simple way to build animation in JavaScript without having to use an external library. The approach is called "Sprite Animation". The basic idea is, for each animation, make a Sprite image that consists all frames, set it as background image of an element, and use JavaScript to move it around to display frames sequentially. I made 8 simple Sprite images, each consists of 2 frames. The final result was a dancing figure with changing faces for each game step, which is very entertaining.
+
 #### Small UI improvements
+
 - Display correctly guessed letter in green color and wrongly guessed letter in red
 - When game ended, display word in green color if won and in grey if lost
 - Display and update the number of remaining guesses and win/lose messages
