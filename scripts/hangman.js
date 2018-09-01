@@ -1,17 +1,21 @@
 function fetchWords(callback) {
-    let request = new XMLHttpRequest();
-    // use proxy to work around CORS issue
+    const request = new XMLHttpRequest();
+
+    // use proxy to workaround CORS issue
     const url = "https://cors-proxy.htmldriven.com/?url=http://app.linkedin-reach.io/words";
-    // commnent the following line to use the backup CORS proxy, faster but only work in Chrome
+
+    // uncommnent the following line to use the backup CORS proxy, faster but only work in Chrome
     // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
+
     // use this URL if already installed CORS Chrome extention, a lot faster than using CORS proxy
     // const url = "http://app.linkedin-reach.io/words";
+
     request.open("GET", url, true);
     request.onload = function () {
         // comment the following line if using backup CORS proxy or CORS Chrome extention
-        const httpResponse = JSON.parse(request.response).body; 
+        const httpResponse = JSON.parse(request.response).body;
         // uncomment the following line if using backup CORS proxy or CORS Chrome extention
-        // const httpResponse = request.response; 
+        // const httpResponse = request.response;
         const words = httpResponse.split("\n");
         callback(words);
     }
@@ -21,34 +25,37 @@ function fetchWords(callback) {
 function Game() {
     const word = Game.getRandomWord();
     const undiscoveredLetters = Game.getUniqueChars(word);
-    console.log(word);
-    console.log(undiscoveredLetters);
+    console.log("Current word is " + word);
+    console.log("All unique letters = " + undiscoveredLetters);
     const discoveredLetters = [];
     const wrongGuesses = [];
-    // status: undefined - in game; true - win; false - game over
+
+    // status: undefined - in game; true - won; false - game over
     this.status = undefined;
-    
-    // check if the guess is correct or wrong, update UI
+
+    // check if the guess is correct or wrong
     this.checkLetter = function (letter) {
-        if (discoveredLetters.indexOf(letter) !== -1 || // check if letter is discovered
-            wrongGuesses.indexOf(letter) !== -1 || // check if letter has been wrongly guessed
-            this.status !== undefined) { // check if game ended
-            return undefined; // skip click event handling
-        }    
+
+        // skip if letter has been previously guessed or game has ended
+        // return undefined to indicate invalid letter input
+        if (discoveredLetters.indexOf(letter) !== -1 ||
+            wrongGuesses.indexOf(letter) !== -1 ||
+            this.status !== undefined) {
+            return undefined;
+        }
+
         const index = undiscoveredLetters.indexOf(letter);
-        if (index === -1) { // if the guess was wrong
-            wrongGuesses.push(letter); // mark the letter as a wrong guess
-            if (wrongGuesses.length >= 6) { // check if guessed wrongly for 6 times
-                this.status = false; // game over                
+        if (index === -1) { // this is a wrong guess
+            wrongGuesses.push(letter);
+            if (wrongGuesses.length >= 6) {
+                this.status = false; // game over after 6 wrong guesses
             }
             return false;
-        }   
-        else { // if the guess was correct
-            // mark letter as discovered
+        } else { // if the guess was correct
             undiscoveredLetters.splice(index, 1);
             discoveredLetters.push(letter);
-            if (undiscoveredLetters.length === 0) { // check if all letters were discovered               
-                this.status = true; // you win
+            if (undiscoveredLetters.length === 0) {
+                this.status = true; // you win if all letters are discovered
             }
             return true;
         }
@@ -60,10 +67,11 @@ function Game() {
 
     this.getMaskedWord = function () {
         let maskedWord = word;
-        if (this.status === undefined) { // only mask if game is ongoing
-            for (let i = 0; i < undiscoveredLetters.length; i++) { // mask all undiscovered letters
-                let letter = undiscoveredLetters[i];            
-                maskedWord = maskedWord.replace(new RegExp(letter, "g"), "_");             
+        // only mask undiscovered letters if game is ongoing
+        if (this.status === undefined) {
+            for (let i = 0; i < undiscoveredLetters.length; i++) {
+                let letter = undiscoveredLetters[i];
+                maskedWord = maskedWord.replace(new RegExp(letter, "g"), "_");
             }
         }
         return maskedWord;
@@ -72,23 +80,21 @@ function Game() {
     this.giveHint = function () {
         const index = Math.floor(Math.random() * undiscoveredLetters.length);
         const hint = undiscoveredLetters[index];
-        undiscoveredLetters.splice(index, 1);
-        discoveredLetters.push(hint);
-        this.checkLetter(hint);
+        this.checkLetter(hint); // update letter arrays and game status
         return hint;
     };
 }
 
 Game.wordList = [];
 Game.getRandomWord = function () {
-    const rand = Math.floor(Math.random() * this.wordList.length);
-    return this.wordList[rand].toUpperCase();
+    const index = Math.floor(Math.random() * this.wordList.length);
+    return this.wordList[index].toUpperCase();
 }
-    // generate an array of unique letters from word
+// generate an array of unique letters from word
 Game.getUniqueChars = function (word) {
     const unique = [];
     for (let i = 0; i < word.length; i++) {
-        if (unique.indexOf(word.charAt(i)) === -1) { // if the character does not exist in unique 
+        if (unique.indexOf(word.charAt(i)) === -1) { // if the character does not exist in unique
             unique.push(word[i]); // add to unique
         }
     }
@@ -101,7 +107,7 @@ function Player() {
     this.nGames = 0;
     this.points = 0;
     this.registerGameStatus = function (status) {
-        if (status === false) {            
+        if (status === false) {
             this.nGames++;
             this.nHearts--;
         } else if (status === true) {
@@ -113,7 +119,7 @@ function Player() {
 }
 
 const leaderboard = {
-    data: JSON.parse(localStorage.getItem('leaderboardData') || "[]"),
+    data: JSON.parse(localStorage.getItem("leaderboardData") || "[]"),
     savePlayerScore: function (score) {
         if (this.data.length < 10 || score > this.data[9].score) {
             const name = window.prompt("Add your name to leaderboard:") || "Anonymous Player";
@@ -126,7 +132,7 @@ const leaderboard = {
             this.data.sort(function (a, b) {
                 return b.score - a.score; // descending order
             });
-            localStorage.setItem('leaderboardData', JSON.stringify(this.data));
+            localStorage.setItem("leaderboardData", JSON.stringify(this.data));
         } else {
             window.alert("Play again to join the leaderboard!");
         }
@@ -136,10 +142,10 @@ const leaderboard = {
 const ui = (function () { // IIFE: Immediately Invoked Function Expression
     const currentWordElement = document.getElementById("currentWord");
     const animationElement = document.getElementById("animation");
-    const gameMsgTitleElement = document.getElementById("gameMessageTitle");
+    const gameMessageTitleElement = document.getElementById("gameMessageTitle");
     const remainingGuessesElement = document.getElementById("remainingGuesses");
-    const heartElement = document.getElementById("nHearts");
-    const nWinElement = document.getElementById("nWins");
+    const nHeartElement = document.getElementById("nHearts");
+    const nWinsElement = document.getElementById("nWins");
     const pointsElement = document.getElementById("points");
     const letterElements = document.getElementsByClassName("letter");
 
@@ -147,7 +153,7 @@ const ui = (function () { // IIFE: Immediately Invoked Function Expression
     const elementsByLetter = {};
     for (let i = 0; i < letterElements.length; i++) {
         const element = letterElements[i];
-        const letter = element.textContent; 
+        const letter = element.textContent;
         elementsByLetter[letter] = element;
     }
 
@@ -156,7 +162,7 @@ const ui = (function () { // IIFE: Immediately Invoked Function Expression
     const leaderboardBtn = document.getElementById("leaderboardBtn");
     const leaderboardCloseBtn = document.getElementsByClassName("close")[0];
     const leaderboardContent = document.getElementById("leaderboardContent");
-    // when the user clicks on the button, open the modal 
+    // when the user clicks on the button, open the modal
     leaderboardBtn.onclick = function() {
         leaderboardModal.style.display = "block";
         const table = createLeaderboardTable();
@@ -193,7 +199,7 @@ const ui = (function () { // IIFE: Immediately Invoked Function Expression
 
     return {
         resetLetters: function () {
-            for (let i = 0; i < letterElements.length; i++) {        
+            for (let i = 0; i < letterElements.length; i++) {
                 letterElements[i].classList.remove("correct");
                 letterElements[i].classList.remove("wrong");
             }
@@ -206,18 +212,18 @@ const ui = (function () { // IIFE: Immediately Invoked Function Expression
         },
         updateGameStatus: function (game) {
             if (game.status === true) {
-                gameMsgTitleElement.textContent = "You win!";
+                gameMessageTitleElement.textContent = "You win!";
                 remainingGuessesElement.textContent = "";
                 animationElement.classList = "animation-7";
                 currentWordElement.classList = "win";
             } else if (game.status === false) {
-                gameMsgTitleElement.textContent = "Game over!";
+                gameMessageTitleElement.textContent = "Game over!";
                 remainingGuessesElement.textContent = "";
                 animationElement.classList = "animation-6";
                 currentWordElement.classList = "lost";
             } else {
                 const nWrongGuesses = game.getNumWrongGuesses();
-                gameMsgTitleElement.textContent = "Remaining guesses:";
+                gameMessageTitleElement.textContent = "Remaining guesses:";
                 remainingGuessesElement.textContent = 6 - nWrongGuesses;
                 animationElement.classList = "animation-" + nWrongGuesses;
                 currentWordElement.classList = "";
@@ -225,9 +231,9 @@ const ui = (function () { // IIFE: Immediately Invoked Function Expression
             currentWordElement.textContent = game.getMaskedWord();
         },
         updatePlayerStatus: function (player) {
-            nWinElement.textContent = "You won " + player.nWins + "/" + player.nGames + " games";
+            nWinsElement.textContent = "You won " + player.nWins + "/" + player.nGames + " games";
             pointsElement.textContent = player.points + " points";
-            heartElement.style.width = player.nHearts * 32 + "px";
+            nHeartElement.style.width = player.nHearts * 32 + "px"; 
         }
     };
 })();
@@ -238,12 +244,11 @@ fetchWords(function (wordList) {
     let player = new Player();
     ui.updateGameStatus(game);
 
-    // get random word from words[]
     const elements = document.getElementsByClassName("letter");
     // listen to click event for each letter
     for (let i = 0; i < elements.length; i++) {
         const element = elements[i];
-        const letter = element.textContent; 
+        const letter = element.textContent;
         element.addEventListener("click", function () {
             const result = game.checkLetter(letter);
             if (result === true) {
@@ -259,7 +264,8 @@ fetchWords(function (wordList) {
             player.registerGameStatus(game.status);
             ui.updatePlayerStatus(player);
             if (game.status !== undefined && player.nHearts <= 0) {
-                window.setTimeout(function () { // use setTimeout to reflow the UI before prompt for player name
+                // use setTimeout to reflow the UI before prompt for player name
+                window.setTimeout(function () {
                     leaderboard.savePlayerScore(player.points);
                 }, 5);
             }
@@ -294,13 +300,13 @@ fetchWords(function (wordList) {
     });
 });
 
-onload = function startAnimation() { 
-    const frameHeight = 320; 
-    const frames = 2; 
-    let frame = 0; 
-    const div = document.getElementById("animation"); 
-    setInterval(function () { 
-        const frameOffset = (++frame % frames) * -frameHeight; 
-        div.style.backgroundPosition = "0px " + frameOffset + "px"; 
-    }, 100); 
-} 
+onload = function startAnimation() {
+    const frameHeight = 320;
+    const frames = 2;
+    let frame = 0;
+    const div = document.getElementById("animation");
+    setInterval(function () {
+        const frameOffset = (++frame % frames) * -frameHeight;
+        div.style.backgroundPosition = "0px " + frameOffset + "px";
+    }, 100);
+}
