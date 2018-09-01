@@ -126,7 +126,7 @@ The interesting challenge here was the increasing complexity as new features wer
 
 #### Get a hint by clicking on the "Hint" button
 
-I designed this feature to add more fun to the game. Each hint unveils one correct letter. Of course hint shouldn't be unlimited so I added scores, hearts and multiple rounds of games so that hinting would make sense to the player. This unfortunately introduced even more complexity which made a complete refactoring necessary.
+I designed this feature to add more fun to the game. Each hint unveils one correct letter. Of course hint shouldn't be unlimited so I added scores, hearts and multiple rounds of games so that hinting would make sense to the player. This introduced even more complexity which made a complete refactoring necessary.
 
 #### The score/heart system
 
@@ -154,41 +154,23 @@ These are the first set of animations I have ever implemented and I think they a
 - Display and update current game scores and player's remaining lives
 - Add favicon and logo images
 
-### OOP refactor
-When I added more and more features to the game, I realized that my code became very cumbersome and error-prone. I have noticed a few problems or bad practices.
+### OOP refactoring
 
-1. There are too many public variables exposed directly, which is not the best practice for safety reasons. Adding a new feature usually involves adding new variables. I declared more and more public variables since the methods were not packaged properly in private scopes. I first started cleaning my code by extracting methods and creating private scopes. That made the code clearer but the logic was still not clear enough. 
+While more and more features were added to the game, I realized that my code became very cumbersome and error-prone. I had noticed some problems and bad practices.
 
-2. Due to the increasing complexity, resetting the game became more and more cumbersome since I had to explicitly reset every single variable. This practice is error-prone because some variables may be missing thus causing problems. This is when I started thinking about redesigning my app structure and applying OOP techniques. I could simply create a new object for each new game instead of explicitly reset all variables. In that way, many bugs will be avoided by design. 
+There were too many public variables scattered all over the place. I went through my code, localized most of them into functions that are only connected via their interfaces. This made my code cleaner, but there were still too many functions and they were not grouped into larger packages with separation of concerns.
 
-3. When adding the leaderboard to the game, I had to add the Player component, which adds another reason to refactor the code and enclose all the player related variables into the player object. Similarly, other components like Game component, UI component should be kept in their own scopes rather than exposing variables to public. 
+I moved one step further, created several classes and objects, and converted functions and variables into methods and properties. These classes and objects represent larger collections of concepts, for example, players, games, or leaderboard. I ended up rewrote pretty much the entire code. It was a huge effort to decouple these items and create encapsulation, but the end result was greatly helpful. For example, I no longer needed to manually reset each game and player state. I simply discard the old instance and create a fresh copy with all initial states. Also the code became much more readable and expandable, and much less error-prone because a lot of problems are now avoided by design.
 
-Within these thoughts in mind, I started to redesign the architecture and re-wrote the code. There were a lot of challenges during the refactoring since I'm not familiar with OOP in JavaScript. The logic and syntax were quite different from Java, especially for the asynchronized operations. It was very cool to learn those new concepts and tricks.
+I didn't complete all the refactoring that I wanted, but I have run out of time for this coding challenge. Some UI-related code, for example, haven't been moved into my `ui` object which was designed to handle all UI-related logic.
+
+This was my first OOP experience in JavaScript. It was a bit of learning curve as it's quite different from Java. Use of callback functions and asynchronous operations were also new to me, and they were very cool to learn.
 
 ## Code structure
+
 The current code consists of three main files: index.html, hangman.css and hangman.js.
 
-### index.html
-
-The main body of HTML including the following sections:
-- navbar sections displaying the logo image and game title
-  - container div
-    - First row 
-      - div for buttons and game status UI
-    - Second row
-      - First column: currentWord div and keyboard div
-      - Second column: gameMessage div and animation div
-- leaderboardModal div
-- link to script 
-
-### hangman.css
-
-This file defines styles for 
-- regular UI components, including keyboards and letters, buttons, and text
-- animations
-- leaderboardModal
-
-### hangman.js
+### `hangman.js`
 
 The JavaScript code is broken down into four classes/objects: Game, Player, Leaderboard and UI.
 
