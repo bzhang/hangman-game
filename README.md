@@ -148,15 +148,9 @@ Game handles game logic like picking random words, keeping track of status of ea
 
 Player keeps track of current player’s statistics across multiple rounds of games, like how many games they have played/won, how many points and hearts they have, and updating them after each game. A new player is created when the current one loses all hearts.
 
-Leaderboard stores top ten scores in local storage and updates it as needed.
+Leaderboard stores top ten scores in Local Storage and updates it as needed.
 
 UI deals with updating DOM elements based on the current states of Game, Player, and Leaderboard.
 
-The main function is 
-```javascript
-fetchWord(function (wordList) {});
-```
-It receives a wordList from web API, creates new game and new player, loops through all the letter elements for click event listening. It also listens for the click events on “New Game” and “Hint” buttons. 
-
-Outside of these main components, there are some other functions for things like fetching dictionary from web API, generating random word, and generating array of unique letters from the random word. 
+Outside of these main components, there are some other functions for things like fetching dictionary from web API, and after that, start the “main” program by creating a new Game and a new Player, set up event listeners, and so on.
 
