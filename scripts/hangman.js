@@ -1,20 +1,18 @@
 function fetchWords(callback) {
     const request = new XMLHttpRequest();
 
-    // use proxy to workaround CORS issue
+    // use proxy to workaround CORS issue, only work in Chrome
+    // if run in Safari, select the "Disable cross origin restrictions" in Develop menu
     const url = "https://cors-proxy.htmldriven.com/?url=http://app.linkedin-reach.io/words";
-
-    // uncommnent the following line to use the backup CORS proxy, faster but only work in Chrome
-    // const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
 
     // use this URL if already installed CORS Chrome extention, a lot faster than using CORS proxy
     // const url = "http://app.linkedin-reach.io/words";
 
     request.open("GET", url, true);
     request.onload = function () {
-        // comment the following line if using backup CORS proxy or CORS Chrome extention
+        // comment the following line if using CORS Chrome extention
         const httpResponse = JSON.parse(request.response).body;
-        // uncomment the following line if using backup CORS proxy or CORS Chrome extention
+        // uncomment the following line if using CORS Chrome extention
         // const httpResponse = request.response;
         const words = httpResponse.split("\n");
         callback(words);

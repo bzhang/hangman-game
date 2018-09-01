@@ -4,6 +4,8 @@
 
 To play the game, simply clone or download the source code to your computer. Open index.html in a web browser (Chrome recommended) and start playing! 
 
+If play in Safari, please check the "Disable cross origin restrictions" option in the Develop menu.
+
 For easier testing and debugging, the correct word will be logged into the console. You can check it in the Console panel in Developer Tools. In Chrome, open Console panel from the menu View - Developer - Developer Tools or press keyboard shortcut Option + Command + I. 
 
 ### Game rules
@@ -27,7 +29,7 @@ The dictionary API does not allow cross domain access. There are at least 2 ways
 
 1. The current implementation uses a CORS proxy (https://cors-proxy.htmldriven.com) to set CORS headers. 
 
-Among several proxies that I have tested, this one works in Chrome perfectly. In Safari, it can also run with the "Disable cross origin restrictions" option checked in the Develop menu.
+Among several proxies that I have tested, this one works in Chrome without additional configurations. In Safari, it can also run with the "Disable cross origin restrictions" option checked in the Develop menu.
 
 3. The fastest way is to install a Chrome extension that disables CORS restriction. There are several of them serving this purpose. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This approach loads the dictionary fastest but does not work in other browsers without the extension.
 
