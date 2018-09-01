@@ -2,7 +2,7 @@
 
 ## How to run the game
 
-To play the game, simply clone or download the source code to your computer. Open index.html in a web browser and start playing! 
+To play the game, simply clone or download the source code to your computer. Open index.html in a web browser (Chrome recommended) and start playing! 
 
 For easier testing and debugging, the correct word will be logged into the console. You can check it in the Console panel in Developer Tools. In Chrome, open Console panel from the menu View - Developer - Developer Tools or press keyboard shortcut Option + Command + I. 
 
@@ -23,27 +23,11 @@ For easier testing and debugging, the correct word will be logged into the conso
 
 The entire dictionary is loaded from remote server every time the page refreshes, and it takes several seconds. (Clicking on the "New Game" button does not refresh the page so there is no waiting time for that.)
 
-The dictionary API does not allow cross domain access. There are at least 3 ways to work around it.
+The dictionary API does not allow cross domain access. There are at least 2 ways to work around it.
 
 1. The current implementation uses a CORS proxy (https://cors-proxy.htmldriven.com) to set CORS headers. 
 
-Among several proxies that I have tested, this one works in both Chrome and Safari but is slightly slower in Chrome than in Safari.
-
-2. Another proxy (https://cors-anywhere.herokuapp.com) is a lot faster but only works in Chrome. 
-
-To use this one instead, comment out following lines:
-
-```javascript
-const url = "https://cors-proxy.htmldriven.com/?url=http://app.linkedin-reach.io/words";
-const httpResponse = JSON.parse(request.response).body;
-```
-
-And uncomment these:
-
-```javascript
-// const url = "https://cors-anywhere.herokuapp.com/http://app.linkedin-reach.io/words";
-// const httpResponse = request.response;
-```
+Among several proxies that I have tested, this one works in Chrome perfectly. In Safari, it can also run with the "Disable cross origin restrictions" option checked in the Develop menu.
 
 3. The fastest way is to install a Chrome extension that disables CORS restriction. There are several of them serving this purpose. The one I'm using is called "Allow-Control-Allow-Origin: *" offered by vitvad. This approach loads the dictionary fastest but does not work in other browsers without the extension.
 
